@@ -1,5 +1,5 @@
 """
-URL configuration for mysite project.
+URL configuration for odontocitas project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -16,27 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from odontocitas.odontocitas import views
-
-# Importaciones para las nuevas vistas de estudiantes
-from accounts.views import lista_estudiantes, detalle_estudiante
-
-# Importaciones para servir archivos de medios en desarrollo
-from django.conf import settings
-from django.conf.urls.static import static
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('ofertas/', include('ofertas.urls')),
     path('', views.index, name='index'),
-
-    # Rutas para la lista y detalle de estudiantes
-    path('estudiantes/', lista_estudiantes, name='lista_estudiantes'),
-    path('estudiantes/<int:user_id>/', detalle_estudiante, name='detalle_estudiante'),
 ]
-
-# Añadir la configuración para servir archivos de medios (como fotos de perfil)
-# durante el desarrollo.
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Nuestros Estudiantes - OdontoCitas{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="page-header">
+        <h1>Nuestros Estudiantes</h1>
+        <p>Encuentra al estudiante de odontología ideal para tus necesidades.</p>
+    </header>
+
+    <div class="profiles-grid">
+        {% for perfil in perfiles %}
+        <div class="profile-card">
+            <img src="{% if perfil.foto_perfil %}{{ perfil.foto_perfil.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Foto de {{ perfil.nombre_completo }}" class="profile-photo">
+            <h3 class="profile-name">{{ perfil.nombre_completo|default:perfil.user.username }}</h3>
+            <p class="profile-specialty">{{ perfil.escuela|default:'Escuela no especificada' }}</p>
+            <p class="profile-description">{{ perfil.sobre_mi|truncatewords:10|default:'Apasionado por la odontología.' }}</p>
+            <a href="{% url 'detalle_estudiante' perfil.user.id %}" class="btn">Ver Perfil</a>
+        </div>
+        {% empty %}
+        <div class="col">
+            <p class="text-center text-muted">Aún no hay estudiantes registrados en la plataforma.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

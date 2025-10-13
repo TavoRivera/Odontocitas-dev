@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="hero-section">
+    <h1>Tu Sonrisa, Nuestra Prioridad</h1>
+    <p>Conectamos pacientes con estudiantes de odontología talentosos para ofrecerte un cuidado dental accesible y de calidad.</p>
+    <div>
+        <a href="{% url 'lista_estudiantes' %}" class="btn btn-primary">Ver Perfiles</a>
+        <a href="/ofertas" class="btn btn-secondary">Explorar Ofertas</a>
+    </div>
+</div>
+
+<!-- Puedes añadir más secciones aquí, como "Cómo funciona" o testimonios -->
+<div class="container">
+    <div class="page-header">
+        <h2>Servicios Populares</h2>
+    </div>
+    <!-- Aquí podrías mostrar algunas ofertas o servicios destacados -->
+</div>
+{% endblock %}

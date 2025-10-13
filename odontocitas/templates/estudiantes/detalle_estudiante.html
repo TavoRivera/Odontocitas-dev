@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ perfil.nombre_completo }} - OdontoLink{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Columna del Perfil Principal (Izquierda) -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm p-4 text-center">
+                <img src="{{ perfil.foto_perfil.url }}" alt="Foto de {{ perfil.nombre_completo }}" class="rounded-circle mx-auto mb-3" width="150" height="150">
+                <h3>{{ perfil.nombre_completo|default:perfil.user.username }}</h3>
+                <div class="text-warning mb-2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span class="text-muted">(2 reseñas)</span>
+                </div>
+                <p class="text-muted"><i class="fas fa-university me-2"></i>{{ perfil.escuela|default:'Escuela no especificada' }}</p>
+                <p class="text-muted"><i class="fas fa-map-marker-alt me-2"></i>{{ perfil.ubicacion|default:'Ubicación no especificada' }}</p>
+            </div>
+        </div>
+
+        <!-- Columna de Detalles (Derecha) -->
+        <div class="col-lg-8">
+            <!-- Sobre Mí -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h4 class="card-title">Sobre Mí</h4>
+                    <p>{{ perfil.sobre_mi|default:'No hay descripción disponible.' }}</p>
+                </div>
+            </div>
+
+            <!-- Habilidades -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h4 class="card-title">Habilidades</h4>
+                    {% for habilidad in perfil.habilidades.all %}
+                        <span class="badge bg-secondary me-2 p-2">{{ habilidad.nombre }}</span>
+                    {% empty %}
+                        <p class="text-muted">No se han especificado habilidades.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Servicios Ofrecidos -->
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="card-title">Servicios Ofrecidos</h4>
+                    {% for oferta in ofertas %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <h5 class="card-title">{{ oferta.titulo }}</h5>
+                                        <p class="card-text">{{ oferta.descripcion|truncatewords:20 }}</p>
+                                        <p class="card-text fw-bold">${{ oferta.precio }}</p>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <a href="#" class="btn btn-primary">Ver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">Este estudiante no tiene ninguna oferta activa.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

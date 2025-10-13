@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OdontoCitas</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <nav class="main-nav">
+        <a href="/" class="brand">OdontoCitas</a>
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/ofertas">Ofertas</a></li>
+            <li><a href="{% url 'lista_estudiantes' %}">Perfiles</a></li>
+            <li><a href="#">Citas</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'edit_profile' %}">Editar Perfil</a></li>
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'lista_usuarios' %}">Usuarios</a></li>
+                {% endif %}
+                <li>
+                    <form action="{% url 'logout' %}" method="post" class="logout-form">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button">Cerrar Sesión</button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 OdontoCitas. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

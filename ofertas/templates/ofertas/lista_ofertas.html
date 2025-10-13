@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>Ofertas</h1>
+    {% for oferta in ofertas %}
+        <div class="card">
+            <h2>{{ oferta.titulo }}</h2>
+            <p>{{ oferta.descripcion }}</p>
+            <p>Precio: ${{ oferta.precio }}</p>
+            <p>Creado por: {{ oferta.creador.username }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
