@@ -3,32 +3,65 @@
 <html>
 <head>
     <title>OdontoCitas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <nav class="main-nav">
         <a href="/" class="brand">OdontoCitas</a>
+        <div class="nav-links">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/ofertas">Ofertas</a></li>
+                <li><a href="{% url 'lista_estudiantes' %}">Estudiantes</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="#">Citas</a></li>
+                    <li><a href="{% url 'edit_profile' %}">Editar Perfil</a></li>
+                    {% if user.is_superuser %}
+                        <li><a href="{% url 'lista_usuarios' %}">Usuarios</a></li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+        <div class="nav-right">
+             {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">Cerrar Sesión</button>
+                </form>
+            {% else %}
+                 <a href="{% url 'login' %}" class="login-button">Iniciar Sesión</a>
+            {% endif %}
+        </div>
+        <button class="hamburger-menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <div class="mobile-nav">
         <ul>
             <li><a href="/">Inicio</a></li>
             <li><a href="/ofertas">Ofertas</a></li>
-            <li><a href="{% url 'lista_estudiantes' %}">Perfiles</a></li>
-            <li><a href="#">Citas</a></li>
-            {% if user.is_authenticated %}
+            <li><a href="{% url 'lista_estudiantes' %}">Estudiantes</a></li>
+             {% if user.is_authenticated %}
+                <li><a href="#">Citas</a></li>
                 <li><a href="{% url 'edit_profile' %}">Editar Perfil</a></li>
                 {% if user.is_superuser %}
                     <li><a href="{% url 'lista_usuarios' %}">Usuarios</a></li>
                 {% endif %}
                 <li>
-                    <form action="{% url 'logout' %}" method="post" class="logout-form">
+                    <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="logout-button">Cerrar Sesión</button>
+                        <button type="submit" class="logout-button-mobile">Cerrar Sesión</button>
                     </form>
                 </li>
             {% else %}
                 <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
             {% endif %}
         </ul>
-    </nav>
+    </div>
+
 
     <main>
         {% block content %}
@@ -36,7 +69,17 @@
     </main>
 
     <footer class="main-footer">
-        <p>&copy; 2024 OdontoCitas. Todos los derechos reservados.</p>
+        <p>&copy; 2025 OdontoCitas UNAN Managua. Todos los derechos reservados.</p>
     </footer>
+
+<script>
+    const hamburger = document.querySelector('.hamburger-menu');
+    const mobileNav = document.querySelector('.mobile-nav');
+
+    hamburger.addEventListener('click', () => {
+        mobileNav.classList.toggle('is-active');
+    });
+</script>
+
 </body>
 </html>

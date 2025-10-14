@@ -54,7 +54,7 @@ def edit_profile(request):
         perfil = Perfil(user=request.user)
 
     if request.method == 'POST':
-        form = PerfilForm(request.POST, instance=perfil)
+        form = PerfilForm(request.POST, request.FILES, instance=perfil)
         if form.is_valid():
             form.save()
             return redirect('/')
@@ -66,8 +66,8 @@ def edit_profile(request):
 # --- Vistas para el listado y detalle de estudiantes (perfiles) ---
 
 def lista_estudiantes(request):
-    """Muestra la lista de todos los perfiles de estudiantes."""
-    perfiles = Perfil.objects.all()
+    """Muestra la lista de todos los perfiles de estudiantes, excluyendo a los superusuarios."""
+    perfiles = Perfil.objects.filter(user__is_superuser=False)
     return render(request, 'estudiantes/lista_estudiantes.html', {'perfiles': perfiles})
 
 def detalle_estudiante(request, user_id):

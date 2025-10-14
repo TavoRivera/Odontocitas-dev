@@ -1,31 +1,53 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h1>Lista de Usuarios</h1>
-    <a href="{% url 'register' %}" class="button">Agregar Usuario</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Usuario</th>
-                <th>Email</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
+<div class="container">
+    <div class="page-header">
+        <h1>Gestión de Usuarios</h1>
+        <p>Administra, edita o elimina perfiles de usuario.</p>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <a href="{% url 'register' %}" class="btn btn-primary-table">
+                <i class="fas fa-plus"></i> Agregar Nuevo Usuario
+            </a>
+        </div>
+        <table class="modern-table">
+            <thead>
                 <tr>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.first_name }}</td>
-                    <td>{{ user.last_name }}</td>
-                    <td>
-                        <a href="{% url 'editar_usuario' user.id %}">Editar</a>
-                        <a href="{% url 'eliminar_usuario' user.id %}">Eliminar</a>
-                    </td>
+                    <th>Usuario</th>
+                    <th>Email</th>
+                    <th>Nombre Completo</th>
+                    <th class="actions-column">Acciones</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            <div class="user-cell">
+                                <strong>{{ user.username }}</strong>
+                            </div>
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.first_name }} {{ user.last_name }}</td>
+                        <td class="actions-cell">
+                            <a href="{% url 'editar_usuario' user.id %}" class="btn-action btn-edit">
+                                <i class="fas fa-pencil-alt"></i> Editar
+                            </a>
+                            <a href="{% url 'eliminar_usuario' user.id %}" class="btn-action btn-delete">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" class="empty-cell">No hay usuarios registrados.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

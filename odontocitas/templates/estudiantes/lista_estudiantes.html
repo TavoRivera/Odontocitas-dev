@@ -7,7 +7,7 @@
 <div class="container">
     <header class="page-header">
         <h1>Nuestros Estudiantes</h1>
-        <p>Encuentra al estudiante de odontología ideal para tus necesidades.</p>
+        <p>Encuentra al estudiante de odontología de UNAN Managua ideal para tus necesidades.</p>
     </header>
 
     <div class="profiles-grid">
@@ -15,7 +15,16 @@
         <div class="profile-card">
             <img src="{% if perfil.foto_perfil %}{{ perfil.foto_perfil.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Foto de {{ perfil.nombre_completo }}" class="profile-photo">
             <h3 class="profile-name">{{ perfil.nombre_completo|default:perfil.user.username }}</h3>
-            <p class="profile-specialty">{{ perfil.escuela|default:'Escuela no especificada' }}</p>
+            <p class="profile-specialty">{{ perfil.get_nivel_academico_display|default:'Nivel no especificado' }}</p>
+            
+            <div class="availability-badge {% if perfil.disponible_para_citas %}available{% else %}unavailable{% endif %}">
+                {% if perfil.disponible_para_citas %}
+                    <i class="fas fa-check-circle"></i> Disponible
+                {% else %}
+                    <i class="fas fa-times-circle"></i> No Disponible
+                {% endif %}
+            </div>
+
             <p class="profile-description">{{ perfil.sobre_mi|truncatewords:10|default:'Apasionado por la odontología.' }}</p>
             <a href="{% url 'detalle_estudiante' perfil.user.id %}" class="btn">Ver Perfil</a>
         </div>

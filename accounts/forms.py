@@ -1,3 +1,4 @@
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -15,4 +16,14 @@ class UserEditForm(forms.ModelForm):
 class PerfilForm(forms.ModelForm):
     class Meta:
         model = Perfil
-        exclude = ['user']
+        fields = [
+            'nombre_completo',
+            'foto_perfil',
+            'sobre_mi',
+            'nivel_academico',
+            'carnet_de_estudiante',
+            'telefono_estudiante',
+            'correo_profesional',
+            'horarios_atencion',
+            'disponible_para_citas'
+        ]

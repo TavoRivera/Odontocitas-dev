@@ -1,10 +1,33 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h1>Editar Usuario: {{ edited_user.username }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar Cambios</button>
-    </form>
+<div class="container">
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Editar Usuario</h2>
+            <p>Modificando el perfil de <strong>{{ edited_user.username }}</strong></p>
+        </div>
+
+        <form method="post" class="modern-form">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-field">
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="field-wrapper">
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="form-help-text">{{ field.help_text|safe }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="form-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

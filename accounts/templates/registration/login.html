@@ -1,10 +1,36 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-  <h2>Iniciar Sesión</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="button">Iniciar Sesión</button>
-  </form>
+<div class="container">
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Bienvenido de Nuevo</h2>
+            <p>Inicia sesión para continuar en OdontoCitas.</p>
+        </div>
+
+        {% if form.errors %}
+            <div style="color: #dc3545; text-align: center; margin-bottom: 1rem;">
+                <p>Tu nombre de usuario y contraseña no coinciden. Por favor, inténtalo de nuevo.</p>
+            </div>
+        {% endif %}
+
+        <form method="post" class="modern-form">
+            {% csrf_token %}
+            
+             {% for field in form %}
+                <div class="form-field">
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="field-wrapper">
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="form-help-text">{{ field.help_text|safe }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
