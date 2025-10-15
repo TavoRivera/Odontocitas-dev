@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-^=6-_k)oh!n9-fpcd1qd0rf(!8y2!!8cc*so1if(!*ydv@*_dc
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://*.firebase.studio', 'https://*.cloudworkstations.dev','*']
+CSRF_TRUSTED_ORIGINS = ['https://*.firebase.studio', 'https://*.cloudworkstations.dev','https://odontocitas-dev.onrender.com']
 
 
 # Application definition
