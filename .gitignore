@@ -1,2 +1,9 @@
-.venv
-__pycache__
+# Directorio de archivos subidos por los usuarios
+/media/
+
+# Entorno virtual de Python
+.venv/
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc

@@ -1,33 +1,80 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="form-container">
-        <div class="form-header">
-            <h2>Editar Usuario</h2>
-            <p>Modificando el perfil de <strong>{{ edited_user.username }}</strong></p>
+<div class="form-container">
+    <div class="form-header">
+        <h2>Editar Usuario</h2>
+        <p>Modificando el perfil de <strong>{{ edited_user.username }}</strong></p>
+    </div>
+
+    <form method="post" class="modern-form">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-error-summary">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {# --- Campos del Usuario --- #}
+        <div class="form-field">
+            <label class="form-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+            <div class="field-wrapper">{{ form.username }}</div>
+            {% if form.username.help_text %}<small class="form-help-text">{{ form.username.help_text|safe }}</small>{% endif %}
+            {% for error in form.username.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
         </div>
 
-        <form method="post" class="modern-form">
-            {% csrf_token %}
+        <div class="form-field">
+            <label class="form-label" for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+            <div class="field-wrapper">{{ form.first_name }}</div>
+            {% for error in form.first_name.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+        </div>
 
-            {% for field in form %}
-                <div class="form-field">
-                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    <div class="field-wrapper">
-                        {{ field }}
-                        {% if field.help_text %}
-                            <small class="form-help-text">{{ field.help_text|safe }}</small>
-                        {% endif %}
-                        {% for error in field.errors %}
-                            <div class="form-error">{{ error }}</div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
-            
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-        </form>
-    </div>
+        <div class="form-field">
+            <label class="form-label" for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+            <div class="field-wrapper">{{ form.last_name }}</div>
+            {% for error in form.last_name.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+        </div>
+
+        <div class="form-field">
+            <label class="form-label" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+            <div class="field-wrapper">{{ form.email }}</div>
+            {% for error in form.email.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+        </div>
+        
+        {# --- Permisos --- #}
+        <div class="form-field">
+            <div class="field-wrapper-checkbox">
+                 {{ form.is_staff }}
+                <label class="form-label-checkbox" for="{{ form.is_staff.id_for_label }}">{{ form.is_staff.label }}</hlabel>
+            </div>
+             <div class="field-wrapper-checkbox">
+                {{ form.is_superuser }}
+                <label class="form-label-checkbox" for="{{ form.is_superuser.id_for_label }}">{{ form.is_superuser.label }}</label>
+            </div>
+        </div>
+
+        <hr>
+
+        {# --- Cambio de Contraseña (Opcional) --- #}
+        <h3 class="form-section-header">Cambiar Contraseña</h3>
+        <p class="form-section-description">Deja los siguientes campos en blanco si no quieres cambiar la contraseña.</p>
+
+        <div class="form-field">
+            <label class="form-label" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+            <div class="field-wrapper">{{ form.password }}</div>
+            {% for error in form.password.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+        </div>
+
+        <div class="form-field">
+            <label class="form-label" for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+            <div class="field-wrapper">{{ form.password2 }}</div>
+            {% for error in form.password2.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
 </div>
 {% endblock %}

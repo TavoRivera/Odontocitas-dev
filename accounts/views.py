@@ -2,17 +2,29 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.db.models import Q
 from .forms import RegistrationForm, PerfilForm, UserEditForm
 from .models import Perfil
-from ofertas.models import Oferta # Importar el modelo Oferta
+from ofertas.models import Oferta
 
 def superuser_check(user):
     return user.is_superuser
 
 @user_passes_test(superuser_check)
 def lista_usuarios(request):
-    users = User.objects.all()
-    return render(request, 'registration/lista_usuarios.html', {'users': users})
+    """Muestra la lista de usuarios con filtro de búsqueda."""
+    users_list = User.objects.all().order_by('username')
+    query = request.GET.get('q')
+
+    if query:
+        users_list = users_list.filter(
+            Q(username__icontains=query) |
+            Q(email__icontains=query) |
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query)
+        ).distinct()
+
+    return render(request, 'registration/lista_usuarios.html', {'users': users_list})
 
 @user_passes_test(superuser_check)
 def register(request):
@@ -70,9 +82,9 @@ def lista_estudiantes(request):
     perfiles = Perfil.objects.filter(user__is_superuser=False)
     return render(request, 'estudiantes/lista_estudiantes.html', {'perfiles': perfiles})
 
+
 def detalle_estudiante(request, user_id):
     """Muestra el perfil detallado de un estudiante y sus ofertas."""
     perfil = get_object_or_404(Perfil, user_id=user_id)
-    # Obtener las ofertas publicadas por ese usuario
     ofertas = Oferta.objects.filter(creador=perfil.user)
     return render(request, 'estudiantes/detalle_estudiante.html', {'perfil': perfil, 'ofertas': ofertas})
