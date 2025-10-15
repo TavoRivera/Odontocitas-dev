@@ -1,45 +1,124 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block content %}
-<div class="hero-section">
-    <h1>Tu Sonrisa, Nuestra Prioridad</h1>
-    <p>Conectamos pacientes con estudiantes talentosos de odontología de la UNAN Managua para ofrecerte un cuidado dental accesible y de calidad.</p>
-    <div>
-        <a href="{% url 'lista_estudiantes' %}" class="btn btn-primary">Ver Perfiles</a>
-        <a href="/ofertas" class="btn btn-primary">Explorar Ofertas</a>
-    </div>
-</div>
+{% block title %}Inicio - OdontoCitas{% endblock %}
 
-<!-- Sección de Información de la Clínica -->
-<div class="clinic-info-section" style="padding: 60px 0; background-color: #f9f9f9;">
-    <div class="container">
-        <div class="row align-items-center">
-           <!-- <div class="col-md-6">
-                <img src="{% static 'images/clinic_photo.jpg' %}" alt="Interior de la Clínica Dental UNAN Managua" class="img-fluid rounded shadow-sm">
-            </div> -->
-            <div class="col-md-6">
-                <div class="page-header" style="border-bottom: none; margin-bottom: 20px; padding-bottom: 0;">
-                    <h2 style="font-size: 2.5rem; color: #333;">Nuestra Clínica</h2>
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="home-page-container">
+
+    <!-- Hero Section -->
+    <section class="hero-section-home">
+        <div class="hero-content">
+            <h1 class="hero-title-home">Tu Sonrisa, Nuestra Prioridad</h1>
+            <p class="hero-subtitle-home">Conectamos pacientes con estudiantes talentosos de odontología de la UNAN Managua para ofrecerte un cuidado dental accesible y de calidad.</p>
+            <div class="hero-buttons-home">
+                <a href="{% url 'lista_estudiantes' %}" class="btn-home">Ver Perfiles de Estudiantes</a>
+                <a href="/ofertas" class="btn-home btn-secondary-home">Explorar Ofertas</a>
+            </div>
+
+            <!-- Hero Contact Info -->
+            <div class="hero-contact-info">
+                <a href="mailto:info.clinica@email.com" class="contact-info-item">
+                    <div class="icon"><i class="fas fa-envelope"></i></div>
+                    <div class="text-content">
+                        <span class="title">Correo</span>
+                        <span class="detail">info.clinica@email.com</span>
+                    </div>
+                </a>
+                <a href="tel:+50588888888" class="contact-info-item">
+                    <div class="icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="text-content">
+                        <span class="title">Teléfono</span>
+                        <span class="detail">(505) 8888-8888</span>
+                    </div>
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Rotonda+Universitaria+Managua" target="_blank" class="contact-info-item">
+                    <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="text-content">
+                        <span class="title">Ubicación</span>
+                        <span class="detail">Rotonda Universitaria 1km al sur</span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Clinic Info Section with Carousel -->
+    <section class="home-section clinic-info-section-home">
+        <div class="container">
+            <h2 class="section-title-home">Nuestra Clínica</h2>
+            <p class="section-subtitle-home">
+                Un centro de excelencia en salud dental, combinando educación de primer nivel y atención comunitaria.
+            </p>
+            <div class="info-content-home">
+                <!-- Carousel on the left -->
+                <div class="info-image-home">
+                    <div class="carousel-container">
+                        <div class="carousel-slide active">
+                            <img src="{% static 'images/clinic_photo.jpg' %}" alt="Foto de la clínica 1">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="{% static 'images/clinic_photo2.jpg' %}" alt="Foto de la clínica 2">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="{% static 'images/clinic_photo3.jpg' %}" alt="Foto de la clínica 3">
+                        </div>
+                    </div>
                 </div>
-                <h3 style="font-weight: 600; color: #0056b3;">Clínica Dental UNAN Managua</h3>
-                <p class="lead" style="font-size: 1.1rem;">
-                    Bajo la experta dirección del <strong>Dr. Horacio Gonzales</strong>, nuestra clínica, con sede en la prestigiosa Universidad Nacional Autónoma de Nicaragua, es un centro de excelencia en salud dental.
-                </p>
-                <p>
-                    Nos especializamos en una amplia gama de servicios para cuidar de tu sonrisa, incluyendo: <strong>limpiezas profundas, gingivectomía, restauraciones (calzas)</strong>, y mucho más. Nuestro compromiso es doble: formar a la próxima generación de odontólogos de excelencia y brindar a la comunidad un acceso asequible a servicios de alta calidad. Cada procedimiento es cuidadosamente supervisado por profesionales experimentados, garantizando tu seguridad y satisfacción.
-                </p>
+
+                <!-- Text on the right -->
+                <div class="info-text-home">
+                    <h3>Bajo la experta dirección del <strong>Dr. Horacio Gonzales</strong></h3>
+                    <p>
+                        Nos especializamos en una amplia gama de servicios para cuidar de tu sonrisa, incluyendo: <strong>limpiezas profundas, gingivectomía, restauraciones (calzas)</strong>, y mucho más.
+                    </p>
+                    <p>
+                        Nuestro compromiso es doble: formar a la próxima generación de odontólogos de excelencia y brindar a la comunidad un acceso asequible a servicios de alta calidad. Cada procedimiento es cuidadosamente supervisado por profesionales experimentados, garantizando tu seguridad y satisfacción.
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
-<!-- Sección de Servicios Populares -->
-<div class="container" style="padding: 60px 0;">
-    <div class="page-header">
-        <h2>Servicios Populares</h2>
-    </div>
-    <!-- Aquí podrías mostrar algunas ofertas o servicios destacados -->
-    <p class="text-center text-muted">Explora las ofertas más populares de nuestros estudiantes.</p>
+    <!-- Mission, Vision & Values Section -->
+    <section class="home-section">
+        <div class="container">
+            <div class="feature-cards-container">
+                <div class="feature-card-home">
+                    <div class="card-icon-home">🦷</div>
+                    <h3 class="card-title-home">Nuestra Misión</h3>
+                    <p>Facilitar el acceso a servicios odontológicos de alta calidad y a precios justos, apoyando al mismo tiempo la formación práctica de los futuros profesionales de la odontología en Nicaragua.</p>
+                </div>
+                <div class="feature-card-home vision-card">
+                    <div class="card-icon-home">🌟</div>
+                    <h3 class="card-title-home">Nuestra Visión</h3>
+                    <p>Ser la plataforma líder que conecta a la comunidad con la nueva generación de odontólogos, transformando la manera en que se accede a la salud dental y se fomenta el talento local.</p>
+                </div>
+                <div class="feature-card-home" style="border-top-color: #ffc107;">
+                    <div class="card-icon-home">🤝</div>
+                    <h3 class="card-title-home">Nuestros Valores</h3>
+                    <p>Nos regimos por la ética, la empatía y el compromiso con la excelencia. Cada paciente recibe una atención honesta y un trato humano, construyendo confianza y bienestar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Popular Services Section -->
+    <section class="home-section popular-services-section-home">
+         <div class="container">
+            <h2 class="section-title-home">Servicios Populares</h2>
+            <p class="section-subtitle-home">Explora las ofertas más populares de nuestros estudiantes y encuentra el tratamiento perfecto para ti.</p>
+            <!-- Aquí se podrían listar dinámicamente algunos servicios o un botón para ver todos -->
+             <div class="text-center">
+                <a href="/ofertas" class="btn-home" style="background-color: var(--primary-blue); color: white;">Ver Todas las Ofertas</a>
+            </div>
+        </div>
+    </section>
+
 </div>
 {% endblock %}
