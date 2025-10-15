@@ -4,4 +4,7 @@ from .models import Oferta
 class OfertaForm(forms.ModelForm):
     class Meta:
         model = Oferta
-        fields = ['titulo', 'descripcion', 'precio']
+        fields = ['titulo', 'descripcion', 'precio', 'categoria', 'disponible']
+        widgets = {
+            'descripcion': forms.Textarea(attrs={'rows': 4}),
+        }

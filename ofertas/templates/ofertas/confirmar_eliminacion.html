@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block title %}Confirmar Eliminación - OdontoLink{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <div class="form-header">
+    <h2>¿Seguro que quieres eliminar este tratamiento?</h2>
+    <p>Esta acción no se puede deshacer. El tratamiento <strong>"{{ oferta.titulo }}"</strong> será eliminado permanentemente.</p>
+  </div>
+  
+  <form method="post" class="modern-form">
+    {% csrf_token %}
+    
+    <div class="form-actions">
+      <button type="submit" class="btn btn-danger">Sí, estoy seguro, eliminar</button>
+      <a href="{% url 'mis_ofertas' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

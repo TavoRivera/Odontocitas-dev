@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Detalle de: {{ oferta.titulo }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Columna de la Galería de Imágenes -->
+        <div class="col-lg-7 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    {% with imagenes=oferta.imagenes.all %}
+                        {% if imagenes %}
+                            <!-- Imagen Principal Grande -->
+                            <div class="mb-3">
+                                <img src="{{ imagenes.0.imagen.url }}" alt="Imagen principal de {{ oferta.titulo }}" class="img-fluid rounded" id="main-image">
+                            </div>
+                            <!-- Miniaturas -->
+                            {% if imagenes|length > 1 %}
+                                <div class="d-flex flex-wrap gap-2">
+                                    {% for imagen in imagenes %}
+                                        <img src="{{ imagen.imagen.url }}" alt="Miniatura de {{ oferta.titulo }}" class="img-thumbnail" style="width: 80px; height: 80px; cursor: pointer;" onclick="changeImage('{{ imagen.imagen.url }}')">
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <img src="{% static 'images/placeholder.png' %}" alt="Sin imagen disponible" class="img-fluid rounded">
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna de Información del Tratamiento -->
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <span class="badge bg-primary mb-2">{{ oferta.get_categoria_display }}</span>
+                    <h1 class="card-title">{{ oferta.titulo }}</h1>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ oferta.estudiante.foto_perfil.url|default:'/static/images/default-avatar.png' }}" alt="Foto de {{ oferta.estudiante.nombre_completo }}" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                        <div>
+                            <span class="text-muted">Ofrecido por:</span>
+                            <a href="{% url 'detalle_estudiante' oferta.estudiante.user.id %}" class="fw-bold">{{ oferta.estudiante.nombre_completo|default:oferta.estudiante.user.username }}</a>
+                        </div>
+                    </div>
+
+                    <h3 class="card-subtitle my-3 text-success fw-bold">C${{ oferta.precio }}</h3>
+                    
+                    <p class="card-text">{{ oferta.descripcion|linebreaks }}</p>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="#" class="btn btn-success btn-lg">Contactar al Estudiante</a>
+                        {% if user == oferta.estudiante.user %}
+                             <a href="{% url 'editar_oferta' pk=oferta.pk %}" class="btn btn-secondary">Editar mi tratamiento</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Pequeño script para cambiar la imagen principal al hacer clic en una miniatura
+function changeImage(imageUrl) {
+    document.getElementById('main-image').src = imageUrl;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <div class="form-header">
+            <h2>{% if form.instance.pk %}Editar Oferta{% else %}Crear Nueva Oferta{% endif %}</h2>
+            <p>Rellena los detalles de la oferta para que los estudiantes puedan encontrarla.</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="modern-form">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-field">
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="field-wrapper">
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="form-help-text">{{ field.help_text|safe }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="form-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="form-actions">
+                <a href="{% url 'ofertas:mis_ofertas' %}" class="btn btn-neutral">Cancelar</a>
+                <button type="submit" class="btn btn-primary">
+                    {% if form.instance.pk %}Guardar Cambios{% else %}Crear Oferta{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

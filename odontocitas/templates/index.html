@@ -17,7 +17,7 @@
             <p class="hero-subtitle-home">Conectamos pacientes con estudiantes talentosos de odontología de la UNAN Managua para ofrecerte un cuidado dental accesible y de calidad.</p>
             <div class="hero-buttons-home">
                 <a href="{% url 'lista_estudiantes' %}" class="btn-home">Ver Perfiles de Estudiantes</a>
-                <a href="/ofertas" class="btn-home btn-secondary-home">Explorar Ofertas</a>
+                <a href="{% url 'lista_ofertas' %}" class="btn-home btn-secondary-home">Explorar Tratamientos</a>
             </div>
 
             <!-- Hero Contact Info -->
@@ -108,14 +108,28 @@
         </div>
     </section>
 
-     <!-- Popular Services Section -->
+    <!-- Ofertas Recientes Section -->
     <section class="home-section popular-services-section-home">
-         <div class="container">
-            <h2 class="section-title-home">Servicios Populares</h2>
-            <p class="section-subtitle-home">Explora las ofertas más populares de nuestros estudiantes y encuentra el tratamiento perfecto para ti.</p>
-            <!-- Aquí se podrían listar dinámicamente algunos servicios o un botón para ver todos -->
-             <div class="text-center">
-                <a href="/ofertas" class="btn-home" style="background-color: var(--primary-blue); color: white;">Ver Todas las Ofertas</a>
+        <div class="container">
+            <h2 class="section-title-home">Tratamientos Recientes</h2>
+            <p class="section-subtitle-home">Explora los últimos servicios publicados por nuestros estudiantes y encuentra el tratamiento perfecto para ti.</p>
+            
+            {% if ofertas_recientes %}
+                <div class="ofertas-grid mt-4">
+                    {% for oferta in ofertas_recientes %}
+                        {% include 'ofertas/partials/oferta_card.html' with oferta=oferta %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-secondary text-center mt-4">
+                    <p class="mb-0">Aún no hay tratamientos publicados. ¡Vuelve pronto!</p>
+                </div>
+            {% endif %}
+
+            <div class="text-center mt-4 pt-2">
+                <a href="{% url 'lista_ofertas' %}" class="btn-home" style="background-color: var(--primary-blue); color: white;">
+                    <i class="fas fa-th-list me-2"></i>Ver Todos los Tratamientos
+                </a>
             </div>
         </div>
     </section>

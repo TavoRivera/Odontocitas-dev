@@ -236,3 +236,128 @@ footer {
     .home-page-container .hero-buttons-home .btn-home { width: 100%; margin-bottom: 10px; }
     .home-page-container .feature-cards { flex-direction: column; align-items: center; }
 }
+
+/* 8. OFERTA CARD STYLES */
+/* Estilos para la tarjeta de oferta */
+.oferta-card {
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.oferta-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.oferta-card-imagen-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 60%;
+    background-color: #f5f5f5;
+}
+
+.oferta-card-imagen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.oferta-card-categoria {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(247, 71, 18, 0.733);
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 20px;
+    text-transform: capitalize;
+}
+
+.oferta-card-contenido {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.oferta-card-titulo {
+    font-size: 1.25rem;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+}
+
+.oferta-card-titulo a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.oferta-card-titulo a:hover {
+    color: #007bff;
+}
+
+.oferta-card-descripcion {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+    flex-grow: 1;
+    margin-bottom: 16px;
+}
+
+.oferta-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+    margin-top: auto;
+}
+
+.oferta-card-propietario {
+    font-size: 0.9rem;
+}
+
+.oferta-card-propietario a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #555;
+    transition: color 0.2s ease;
+}
+
+.oferta-card-propietario a:hover {
+    color: #0056b3;
+}
+
+.propietario-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+    border: 1px solid #ddd;
+}
+
+.oferta-card-precio {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #009E60;
+}
+
+.ofertas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    padding: 20px 0;
+}

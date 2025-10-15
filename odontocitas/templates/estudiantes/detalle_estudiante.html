@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="profile-detail-page">
-    <!-- Columna Izquierda: Perfil Fijo -->
+    <!-- Columna Izquierda: Perfil Fijo (SIN CAMBIOS) -->
     <aside class="profile-sidebar-v2">
         <div class="sidebar-card">
             <img src="{% if perfil.foto_perfil %}{{ perfil.foto_perfil.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Foto de {{ perfil.nombre_completo }}" class="profile-photo-v2">
@@ -49,7 +49,6 @@
                 {% endif %}
             </div>
 
-            <!-- Botón de Verificación -->
             {% if perfil.carnet_de_estudiante %}
                 <button id="verified-button" class="verified-badge clickable">
                     <i class="fas fa-shield-alt"></i>
@@ -71,29 +70,24 @@
             <p>{{ perfil.sobre_mi|default:"Este estudiante aún no ha añadido una descripción."|linebreaksbr }}</p>
         </section>
 
+        {# --- INICIO DE LA MODIFICACIÓN --- #}
         <section class="content-card-v2">
             <h2>Servicios Ofrecidos</h2>
-            <div class="services-list-v2">
-                {% for oferta in ofertas %}
-                <div class="service-item-v2">
-                    <div class="service-details">
-                        <h3 class="service-title">{{ oferta.titulo }}</h3>
-                        <p class="service-description">{{ oferta.descripcion }}</p>
-                    </div>
-                    <div class="service-price-action">
-                        <span class="service-price">${{ oferta.precio|floatformat:0 }}</span>
-                        <a href="#" class="btn btn-secondary">Ver</a>
-                    </div>
+            {% if ofertas %}
+                <div class="ofertas-grid">
+                    {% for oferta in ofertas %}
+                        {% include 'ofertas/partials/oferta_card.html' with oferta=oferta %}
+                    {% endfor %}
                 </div>
-                {% empty %}
-                <p class="text-muted">Este estudiante no tiene ninguna oferta activa en este momento.</p>
-                {% endfor %}
-            </div>
+            {% else %}
+                <p class="text-muted mt-3">Este estudiante no tiene ninguna oferta activa en este momento.</p>
+            {% endif %}
         </section>
+        {# --- FIN DE LA MODIFICACIÓN --- #}
     </main>
 </div>
 
-<!-- Modal para el Carnet de Estudiante -->
+<!-- Modal para el Carnet de Estudiante (SIN CAMBIOS) -->
 {% if perfil.carnet_de_estudiante %}
 <div id="credential-modal" class="modal-overlay">
     <div class="modal-content">

@@ -1,10 +1,46 @@
 {% extends 'layout.html' %}
 
+{% block title %}Crear Nuevo Tratamiento - OdontoLink{% endblock %}
+
 {% block content %}
-    <h1>Crear Oferta</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="button">Crear Oferta</button>
-    </form>
+<div class="form-container">
+  <div class="form-header">
+    <h2>Crear Nuevo Tratamiento</h2>
+    <p>Publica un nuevo servicio para que otros puedan encontrarlo. Sé claro y conciso en la descripción.</p>
+  </div>
+  
+  <form method="post" class="modern-form" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% for field in form %}
+      <div class="form-field">
+        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+        
+        <div class="field-wrapper">
+          {{ field }}
+        </div>
+
+        {% if field.help_text %}
+          <small class="form-help-text">{{ field.help_text }}</small>
+        {% endif %}
+
+        {% for error in field.errors %}
+          <div class="form-error">{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    {# --- INICIO DEL CAMPO DE IMÁGENES MANUAL --- #}
+    <div class="form-field">
+      <label for="id_imagenes" class="form-label">Añadir imágenes</label>
+      <div class="field-wrapper">
+        <input type="file" name="imagenes" id="id_imagenes" multiple class="form-control">
+      </div>
+      <small class="form-help-text">Puedes seleccionar varias imágenes a la vez.</small>
+    </div>
+    {# --- FIN DEL CAMPO DE IMÁGENES MANUAL --- #}
+
+    <button type="submit" class="btn btn-primary">Publicar Tratamiento</button>
+  </form>
+</div>
 {% endblock %}

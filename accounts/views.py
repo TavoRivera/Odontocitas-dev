@@ -86,5 +86,5 @@ def lista_estudiantes(request):
 def detalle_estudiante(request, user_id):
     """Muestra el perfil detallado de un estudiante y sus ofertas."""
     perfil = get_object_or_404(Perfil, user_id=user_id)
-    ofertas = Oferta.objects.filter(creador=perfil.user)
+    ofertas = Oferta.objects.filter(estudiante=perfil)
     return render(request, 'estudiantes/detalle_estudiante.html', {'perfil': perfil, 'ofertas': ofertas})

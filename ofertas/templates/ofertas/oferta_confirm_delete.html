@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Confirmar Eliminación</h2>
+        </div>
+
+        <form method="post" class="modern-form">
+            {% csrf_token %}
+            
+            <p>¿Estás seguro de que quieres eliminar permanentemente la oferta <strong>"{{ oferta.titulo }}"</strong>?</p>
+            <p class="text-danger">Esta acción no se puede deshacer.</p>
+
+            <div class="form-actions">
+                <a href="{% url 'ofertas:mis_ofertas' %}" class="btn btn-neutral">Cancelar</a>
+                <button type="submit" class="btn btn-danger">Eliminar Definitivamente</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
