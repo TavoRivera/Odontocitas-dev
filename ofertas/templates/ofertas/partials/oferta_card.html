@@ -1,13 +1,11 @@
 {% load static %}
 <div class="oferta-card">
     <div class="oferta-card-imagen-wrapper">
-        {% with oferta.imagenes.first as primera_imagen %}
-            {% if primera_imagen and primera_imagen.imagen and primera_imagen.imagen.url %}
-                <img src="{{ primera_imagen.imagen.url }}" alt="Imagen de {{ oferta.titulo }}" class="oferta-card-imagen">
-            {% else %}
-                <img src="{% static 'images/placeholder.png' %}" alt="Sin imagen" class="oferta-card-imagen">
-            {% endif %}
-        {% endwith %}
+        {% if oferta.imagen and oferta.imagen.url %}
+            <img src="{{ oferta.imagen.url }}" alt="Imagen de {{ oferta.titulo }}" class="oferta-card-imagen">
+        {% else %}
+            <img src="{% static 'images/placeholder.png' %}" alt="Sin imagen" class="oferta-card-imagen">
+        {% endif %}
         <span class="oferta-card-categoria">{{ oferta.get_categoria_display }}</span>
     </div>
     <div class="oferta-card-contenido">
@@ -15,15 +13,12 @@
         <p class="oferta-card-descripcion">{{ oferta.descripcion|truncatewords:20 }}</p>
         <div class="oferta-card-meta">
             <div class="oferta-card-propietario">
-                {# CORRECCIÓN: Se usa 'user_id' y se apunta al ID del usuario (.user.id), no del perfil. #}
                 <a href="{% url 'detalle_estudiante' user_id=oferta.estudiante.user.id %}">
                     {% if oferta.estudiante.foto_perfil and oferta.estudiante.foto_perfil.url %}
-                        {# CORRECCIÓN: Se usa el campo 'nombre_completo' del perfil para el texto alternativo. #}
                         <img src="{{ oferta.estudiante.foto_perfil.url }}" alt="Foto de {{ oferta.estudiante.nombre_completo }}" class="propietario-avatar">
                     {% else %}
                         <img src="{% static 'images/default_avatar.png' %}" alt="Avatar por defecto" class="propietario-avatar">
                     {% endif %}
-                    {# CORRECCIÓN: Se usa 'nombre_completo' y se hace fallback al username del usuario. #}
                     <span>{{ oferta.estudiante.nombre_completo|default:oferta.estudiante.user.username }}</span>
                 </a>
             </div>

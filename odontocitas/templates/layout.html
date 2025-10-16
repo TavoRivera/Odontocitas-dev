@@ -19,11 +19,11 @@
                 <li><a href="/ofertas">Tratamientos</a></li>
                 <li><a href="{% url 'lista_estudiantes' %}">Estudiantes</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="#">Citas</a></li>
-                    <li><a href="{% url 'mis_ofertas' %}">Publicar Tratamiento</a></li>
-                    <li><a href="{% url 'edit_profile' %}">Editar Perfil</a></li>
+                    <li><a href="#" class="nav-link-important">Citas</a></li>
+                    <li><a href="{% url 'mis_ofertas' %}" class="nav-link-important">Publicar Tratamiento</a></li>
+                    <li><a href="{% url 'edit_profile' %}" class="nav-link-important">Editar Perfil</a></li>
                     {% if user.is_superuser %}
-                        <li><a href="{% url 'lista_usuarios' %}">Usuarios</a></li>
+                        <li><a href="{% url 'lista_usuarios' %}" class="nav-link-important">Usuarios</a></li>
                     {% endif %}
                 {% endif %}
             </ul>
@@ -49,11 +49,11 @@
             <li><a href="/ofertas">Tratamientos</a></li>
             <li><a href="{% url 'lista_estudiantes' %}">Estudiantes</a></li>
              {% if user.is_authenticated %}
-                <li><a href="#">Citas</a></li>
-                <li><a href="{% url 'mis_ofertas' %}">Publicar Tratamientos</a></li>
-                <li><a href="{% url 'edit_profile' %}">Editar Perfil</a></li>
+                <li><a href="#" class="nav-link-important">Citas</a></li>
+                <li><a href="{% url 'mis_ofertas' %}" class="nav-link-important">Publicar Tratamientos</a></li>
+                <li><a href="{% url 'edit_profile' %}" class="nav-link-important">Editar Perfil</a></li>
                 {% if user.is_superuser %}
-                    <li><a href="{% url 'lista_usuarios' %}">Usuarios</a></li>
+                    <li><a href="{% url 'lista_usuarios' %}" class="nav-link-important">Usuarios</a></li>
                 {% endif %}
                 <li>
                     <form action="{% url 'logout' %}" method="post">

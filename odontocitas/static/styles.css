@@ -69,6 +69,17 @@ body {
 .nav-right .login-button { background: var(--primary-blue); color: var(--white); border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: background-color 0.3s ease; text-decoration: none; }
 .nav-right .login-button:hover { background-color: #0056b3; }
 
+.nav-link-important {
+    color: #D9534F !important; /* Rojo suave para destacar */
+}
+
+.nav-link-important:hover {
+    background-color: #f2dede !important; /* Fondo rojo muy claro al pasar el ratón */
+    color: #a94442 !important; /* Rojo más oscuro para el texto al pasar el ratón */
+}
+
+
+
 /* Botones de Logout */
 .logout-button { background: var(--light-red); color: var(--white); border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: background-color 0.3s ease; }
 .logout-button:hover { background-color: #e69898; }

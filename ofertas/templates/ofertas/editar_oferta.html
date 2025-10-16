@@ -7,16 +7,31 @@
 <div class="form-container">
   <div class="form-header">
     <h2>Editar Tratamiento</h2>
-    <p>Actualiza los detalles de tu tratamiento y gestiona las imágenes asociadas.</p>
+    <p>Actualiza los detalles de tu tratamiento.</p>
   </div>
 
   <form method="post" enctype="multipart/form-data" class="modern-form">
     {% csrf_token %}
 
-    <!-- Renderizado de los campos principales del formulario -->
+    <!-- Muestra la imagen actual si existe -->
+    {% if form.instance.imagen and form.instance.imagen.url %}
+      <div class="form-field">
+        <label class="form-label">Imagen Actual</label>
+        <div class="current-image-wrapper">
+          <img src="{{ form.instance.imagen.url }}" alt="Imagen actual de {{ form.instance.titulo }}" class="current-image">
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Renderizado de los campos del formulario -->
     {% for field in form %}
       <div class="form-field">
-        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          <label for="{{ field.id_for_label }}" class="form-label">
+            {{ field.label }}
+            {% if field.name == 'imagen' %}
+              (Opcional: subir para reemplazar)
+            {% endif %}
+          </label>
         <div class="field-wrapper">
           {{ field }}
         </div>
@@ -31,38 +46,6 @@
 
     <hr>
 
-    <!-- Sección para gestionar imágenes existentes -->
-    <div class="form-field">
-      <h3 class="form-label">Imágenes Actuales</h3>
-      <div class="image-management-grid">
-        {% for imagen in oferta.imagenes.all %}
-          <div class="image-preview-container">
-            <img src="{{ imagen.imagen.url }}" alt="Imagen del tratamiento" class="image-preview">
-            <div class="image-delete-overlay">
-              <input type="checkbox" name="delete_images" value="{{ imagen.id }}" id="delete_img_{{ imagen.id }}">
-              <label for="delete_img_{{ imagen.id }}" class="delete-label">Eliminar</label>
-            </div>
-          </div>
-        {% empty %}
-          <p>Este tratamiento no tiene imágenes actualmente.</p>
-        {% endfor %}
-      </div>
-    </div>
-
-    {# --- INICIO DE LA MODIFICACIÓN: AÑADIR NUEVAS IMÁGENES --- #}
-    <div class="form-field">
-      <label for="id_imagenes" class="form-label">Añadir o reemplazar imágenes</label>
-      <div class="field-wrapper">
-        <input type="file" name="imagenes" id="id_imagenes" multiple class="form-control">
-      </div>
-      <small class="form-help-text">
-        <strong>Atención:</strong> Si subes nuevas imágenes, <strong>reemplazarán todas las imágenes existentes</strong>. Si solo quieres eliminar algunas, usa la opción "Eliminar" sobre cada imagen.
-      </small>
-    </div>
-    {# --- FIN DE LA MODIFICACIÓN --- #}
-
-    <hr>
-
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         <a href="{% url 'mis_ofertas' %}" class="btn btn-secondary">Cancelar</a>
@@ -70,55 +53,15 @@
   </form>
 </div>
 
-<!-- Estilos (sin cambios) -->
 <style>
-.image-management-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
+.current-image-wrapper {
+  margin-bottom: 1rem;
 }
-.image-preview-container {
-  position: relative;
+.current-image {
+  max-width: 200px;
+  height: auto;
   border-radius: 8px;
-  overflow: hidden;
   border: 1px solid #ddd;
-}
-.image-preview {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.image-delete-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.image-preview-container:hover .image-delete-overlay {
-  opacity: 1;
-}
-.delete-label {
-  cursor: pointer;
-  padding: 0.5rem;
-  background: rgba(255, 0, 0, 0.7);
-  border-radius: 5px;
-  font-size: 0.9rem;
-}
-input[type="checkbox"][name="delete_images"] {
-  display: none;
-}
-input[type="checkbox"][name="delete_images"]:checked + .delete-label {
-  background: #c00;
-  font-weight: bold;
 }
 .form-actions {
   display: flex;

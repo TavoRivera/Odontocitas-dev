@@ -27,17 +27,10 @@ class Oferta(models.Model):
         choices=CATEGORIAS_CHOICES,
         help_text='Selecciona la categoría del servicio que ofreces.'
     )
+    imagen = models.ImageField(upload_to='ofertas_fotos/', blank=True, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
     disponible = models.BooleanField(default=True)
 
     def __str__(self):
         return self.titulo
-
-class ImagenOferta(models.Model):
-    oferta = models.ForeignKey(
-        Oferta, on_delete=models.CASCADE, related_name='imagenes')
-    imagen = models.ImageField(upload_to='ofertas_fotos/')
-
-    def __str__(self):
-        return f"Imagen para la oferta: {self.oferta.titulo}"

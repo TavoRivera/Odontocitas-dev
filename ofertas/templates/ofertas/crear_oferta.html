@@ -12,6 +12,7 @@
   <form method="post" class="modern-form" enctype="multipart/form-data">
     {% csrf_token %}
 
+    {# El bucle renderizará todos los campos del formulario, incluido el de la imagen única #}
     {% for field in form %}
       <div class="form-field">
         <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
@@ -30,17 +31,19 @@
       </div>
     {% endfor %}
 
-    {# --- INICIO DEL CAMPO DE IMÁGENES MANUAL --- #}
-    <div class="form-field">
-      <label for="id_imagenes" class="form-label">Añadir imágenes</label>
-      <div class="field-wrapper">
-        <input type="file" name="imagenes" id="id_imagenes" multiple class="form-control">
-      </div>
-      <small class="form-help-text">Puedes seleccionar varias imágenes a la vez.</small>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Publicar Tratamiento</button>
+      <a href="{% url 'mis_ofertas' %}" class="btn btn-secondary">Cancelar</a>
     </div>
-    {# --- FIN DEL CAMPO DE IMÁGENES MANUAL --- #}
-
-    <button type="submit" class="btn btn-primary">Publicar Tratamiento</button>
   </form>
 </div>
+
+<style>
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+</style>
 {% endblock %}

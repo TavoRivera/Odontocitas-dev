@@ -6,28 +6,15 @@
 {% block content %}
 <div class="container my-5">
     <div class="row">
-        <!-- Columna de la Galería de Imágenes -->
+        <!-- Columna de la Imagen -->
         <div class="col-lg-7 mb-4">
             <div class="card">
                 <div class="card-body">
-                    {% with imagenes=oferta.imagenes.all %}
-                        {% if imagenes %}
-                            <!-- Imagen Principal Grande -->
-                            <div class="mb-3">
-                                <img src="{{ imagenes.0.imagen.url }}" alt="Imagen principal de {{ oferta.titulo }}" class="img-fluid rounded" id="main-image">
-                            </div>
-                            <!-- Miniaturas -->
-                            {% if imagenes|length > 1 %}
-                                <div class="d-flex flex-wrap gap-2">
-                                    {% for imagen in imagenes %}
-                                        <img src="{{ imagen.imagen.url }}" alt="Miniatura de {{ oferta.titulo }}" class="img-thumbnail" style="width: 80px; height: 80px; cursor: pointer;" onclick="changeImage('{{ imagen.imagen.url }}')">
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        {% else %}
-                            <img src="{% static 'images/placeholder.png' %}" alt="Sin imagen disponible" class="img-fluid rounded">
-                        {% endif %}
-                    {% endwith %}
+                    {% if oferta.imagen and oferta.imagen.url %}
+                        <img src="{{ oferta.imagen.url }}" alt="Imagen principal de {{ oferta.titulo }}" class="img-fluid rounded">
+                    {% else %}
+                        <img src="{% static 'images/placeholder.png' %}" alt="Sin imagen disponible" class="img-fluid rounded">
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -62,11 +49,4 @@
         </div>
     </div>
 </div>
-
-<script>
-// Pequeño script para cambiar la imagen principal al hacer clic en una miniatura
-function changeImage(imageUrl) {
-    document.getElementById('main-image').src = imageUrl;
-}
-</script>
 {% endblock %}
