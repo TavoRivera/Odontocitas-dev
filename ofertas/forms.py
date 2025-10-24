@@ -7,20 +7,18 @@ from django.utils import timezone
 class OfertaForm(forms.ModelForm):
     class Meta:
         model = Oferta
-        fields = ['titulo', 'descripcion', 'precio', 'categoria', 'imagen']
+        fields = ['titulo', 'descripcion', 'precio', 'categoria']
         widgets = {
             'titulo': forms.TextInput(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
             'precio': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: 150.00, A convenir, etc.'}),
             'categoria': forms.Select(attrs={'class': 'form-select'}),
-            'imagen': forms.ClearableFileInput(attrs={'class': 'form-control'})
         }
         labels = {
             'titulo': 'Título del Tratamiento',
             'descripcion': 'Descripción Detallada',
             'precio': 'Precio (C$)',
             'categoria': 'Categoría del Servicio',
-            'imagen': 'Foto Principal (Opcional)'
         }
 
 class CitaForm(forms.ModelForm):

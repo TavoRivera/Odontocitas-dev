@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+
+{% block title %}Mis Citas Agendadas{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Mis Citas Agendadas</h1>
+
+    <!-- Sección de Citas Pendientes -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Citas Pendientes</h3>
+        </div>
+        <div class="card-body">
+            {% if citas_pendientes %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Paciente</th>
+                                <th>Teléfono</th>
+                                <th>Tratamiento</th>
+                                <th>Fecha y Hora</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cita in citas_pendientes %}
+                                <tr>
+                                    <td>{{ cita.nombre_paciente }}</td>
+                                    <td>{{ cita.telefono_paciente }}</td>
+                                    <td>{{ cita.oferta.titulo|default:"No especificado" }}</td>
+                                    <td>{{ cita.fecha_atencion|date:"d/m/Y H:i" }}</td>
+                                    <td class="text-center">
+                                        <form action="{% url 'marcar_cita_atendida' cita.id %}" method="POST" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-success btn-sm me-2">Marcar como Atendida</button>
+                                        </form>
+                                        <form action="{% url 'eliminar_cita' cita.id %}" method="POST" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?');">Eliminar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-center text-muted">No tienes ninguna cita pendiente en este momento.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Sección de Citas Atendidas -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">
+            <h3 class="mb-0">Historial de Citas Atendidas</h3>
+        </div>
+        <div class="card-body">
+            {% if citas_atendidas %}
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Paciente</th>
+                                <th>Tratamiento</th>
+                                <th>Fecha de Atención</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cita in citas_atendidas %}
+                                <tr>
+                                    <td>{{ cita.nombre_paciente }}</td>
+                                    <td>{{ cita.oferta.titulo|default:"No especificado" }}</td>
+                                    <td>{{ cita.fecha_atencion|date:"d/m/Y H:i" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-center text-muted">Aún no has atendido ninguna cita.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

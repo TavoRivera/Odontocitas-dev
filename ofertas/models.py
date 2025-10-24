@@ -12,22 +12,13 @@ CATEGORIAS_CHOICES = [
 
 class Oferta(models.Model):
     # La lista de categorías ya no está aquí.
-
-    titulo = models.CharField(max_length=255)
+    # ... (el resto de tus campos de Oferta)
+    perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='ofertas')
+    titulo = models.CharField(max_length=200)
     descripcion = models.TextField()
-    estudiante = models.ForeignKey(
-        Perfil, on_delete=models.CASCADE, related_name='ofertas')
-    precio = models.CharField(
-        max_length=100,
-        help_text='Indica un precio p.e. 100.00 o escribe "A convenir", "Gratis", etc.'
-    )
-    # El campo 'choices' sigue funcionando porque la constante está en el mismo módulo.
-    categoria = models.CharField(
-        max_length=50,
-        choices=CATEGORIAS_CHOICES,
-        help_text='Selecciona la categoría del servicio que ofreces.'
-    )
-    imagen = models.ImageField(upload_to='ofertas_fotos/', blank=True, null=True)
+    # Ahora usamos la lista de choices que está fuera de la clase
+    categoria = models.CharField(max_length=100, choices=CATEGORIAS_CHOICES, default='limpieza')
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
     disponible = models.BooleanField(default=True)
@@ -41,6 +32,7 @@ class Cita(models.Model):
     email_paciente = models.EmailField(blank=True, null=True)
     fecha_atencion = models.DateTimeField(blank=True, null=True)
     consulta = models.TextField(blank=True, null=True)
+    atendida = models.BooleanField(default=False)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
