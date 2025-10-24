@@ -289,3 +289,28 @@ body {
     .profile-detail-page { padding: 0; }
     .content-card-v2, .profile-sidebar-v2 .sidebar-card { border-radius: 0; }
 }
+
+/* --- Media Queries para Tipografía Responsiva --- */
+@media (max-width: 768px) {
+    h1, .hero-section h1, .page-header h1 { font-size: 2.2rem !important; }
+    h2, .form-header h2 { font-size: 1.8rem !important; }
+    h3, .info-text-home h3 { font-size: 1.5rem !important; }
+    h4 { font-size: 1.2rem !important; }
+
+    /* Clases específicas que funcionan como encabezados */
+    .profile-name-v2 { font-size: 1.5rem !important; }
+    .service-price-action .service-price { font-size: 1.3rem !important; }
+    .oferta-card-titulo { font-size: 1.1rem !important; }
+}
+
+@media (max-width: 576px) {
+    h1, .hero-section h1, .page-header h1 { font-size: 1.8rem !important; }
+    h2, .form-header h2 { font-size: 1.6rem !important; }
+    h3, .info-text-home h3 { font-size: 1.3rem !important; }
+    h4 { font-size: 1.1rem !important; }
+
+    /* Ajustes adicionales para móviles pequeños */
+    .profile-name-v2 { font-size: 1.3rem !important; }
+    .service-price-action .service-price { font-size: 1.2rem !important; }
+    .oferta-card-titulo { font-size: 1.0rem !important; }
+}

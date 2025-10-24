@@ -1,0 +1,20 @@
+.modal-body .form-group {
+    margin-bottom: 1rem;
+}
+
+.modal-body .form-label {
+    font-weight: bold;
+}
+
+.modal-body .form-control {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal-body .btn-primary {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+}

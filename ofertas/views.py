@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Oferta, CATEGORIAS_CHOICES
-from .forms import OfertaForm
+from .models import Oferta, CATEGORIAS_CHOICES, Cita
+from .forms import OfertaForm, CitaForm
 from django.db.models import Q
+from django.http import JsonResponse
+import datetime
 
 def lista_ofertas(request):
     """
@@ -35,13 +37,36 @@ def lista_ofertas(request):
 
 def detalle_oferta(request, oferta_id):
     oferta = get_object_or_404(Oferta, pk=oferta_id)
-    return render(request, 'ofertas/detalle_oferta.html', {'oferta': oferta})
+    
+    if request.method == 'POST':
+        form = CitaForm(request.POST)
+        if form.is_valid():
+            cita = form.save(commit=False)
+            cita.oferta = oferta
+            cita.estudiante = oferta.estudiante
+            cita.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            errors = {field: error[0] for field, error in form.errors.items()}
+            return JsonResponse({'status': 'error', 'errors': errors})
+
+    else:
+        form = CitaForm()
+
+    min_datetime_str = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
+
+    context = {
+        'oferta': oferta,
+        'form': form,
+        'min_datetime': min_datetime_str
+    }
+    return render(request, 'ofertas/detalle_oferta.html', context)
 
 @login_required
 def crear_oferta(request):
-    if not hasattr(request.user, 'perfil'):
-        messages.warning(request, 'Para crear un tratamiento, primero debes completar tu perfil de estudiante.')
-        return redirect('edit_profile')
+    if not hasattr(request.user, 'perfil') or not request.user.perfil.es_estudiante:
+        messages.warning(request, 'Acción no permitida. Solo los perfiles de estudiante pueden crear tratamientos.')
+        return redirect('home') # O a donde consideres apropiado
 
     if request.method == 'POST':
         form = OfertaForm(request.POST, request.FILES)
@@ -73,6 +98,7 @@ def eliminar_oferta(request, pk):
 
     if request.method == 'POST':
         oferta.delete()
+        messages.success(request, f'El tratamiento "{oferta.titulo}" ha sido eliminado.')
         return redirect('mis_ofertas')
 
     return render(request, 'ofertas/confirmar_eliminacion.html', {'oferta': oferta})
@@ -86,6 +112,7 @@ def editar_oferta(request, pk):
         
         if form.is_valid():
             form.save()
+            messages.success(request, f'El tratamiento "{oferta.titulo}" ha sido actualizado.')
             return redirect('mis_ofertas')
 
     else:

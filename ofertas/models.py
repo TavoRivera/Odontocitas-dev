@@ -34,3 +34,14 @@ class Oferta(models.Model):
 
     def __str__(self):
         return self.titulo
+
+class Cita(models.Model):
+    nombre_paciente = models.CharField(max_length=255)
+    telefono_paciente = models.CharField(max_length=20)
+    email_paciente = models.EmailField(blank=True, null=True)
+    fecha_atencion = models.DateTimeField(blank=True, null=True)
+    consulta = models.TextField(blank=True, null=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Cita para {self.nombre_paciente} el {self.fecha_atencion.strftime('%d/%m/%Y') if self.fecha_atencion else 'fecha pendiente'}"

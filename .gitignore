@@ -1,9 +1,4 @@
-# Directorio de archivos subidos por los usuarios
-/media/
-
-# Entorno virtual de Python
-.venv/
-
-# Archivos de caché de Python
-__pycache__/
+db.sqlite3
 *.pyc
+__pycache__/
+.venv/

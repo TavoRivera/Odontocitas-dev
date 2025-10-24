@@ -3,8 +3,32 @@
 
 {% block title %}Detalle de: {{ oferta.titulo }}{% endblock %}
 
+{% block head %}
+<style>
+    /* Anula el margen superior de Bootstrap para mostrar el modal más arriba */
+    #solicitarCitaModal .modal-dialog {
+        margin-top: 0.2rem; /* Valor muy pequeño para que quede casi arriba del todo */
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container my-5">
+
+    <!-- Sección de Mensajes -->
+    {% if messages %}
+        <div class="row">
+            <div class="col-12">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
     <div class="row">
         <!-- Columna de la Imagen -->
         <div class="col-lg-7 mb-4">
@@ -39,7 +63,11 @@
                     <p class="card-text">{{ oferta.descripcion|linebreaks }}</p>
 
                     <div class="d-grid gap-2 mt-4">
-                        <a href="#" class="btn btn-success btn-lg">Contactar al Estudiante</a>
+                        <!-- Botón que activa el modal -->
+                        <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#solicitarCitaModal">
+                            Solicitar este tratamiento
+                        </button>
+
                         {% if user == oferta.estudiante.user %}
                              <a href="{% url 'editar_oferta' pk=oferta.pk %}" class="btn btn-secondary">Editar mi tratamiento</a>
                         {% endif %}
@@ -49,4 +77,149 @@
         </div>
     </div>
 </div>
+
+<!-- Modal para Solicitar Cita -->
+<div class="modal fade" id="solicitarCitaModal" tabindex="-1" aria-labelledby="solicitarCitaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="solicitarCitaModalLabel">Solicitar Cita para: {{ oferta.titulo }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                 <form method="post" action="{% url 'detalle_oferta' oferta.id %}" id="citaForm">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        {{ form.nombre_paciente.label_tag }} 
+                        {{ form.nombre_paciente }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.telefono_paciente.label_tag }} 
+                        {{ form.telefono_paciente }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.email_paciente.label_tag }} 
+                        {{ form.email_paciente }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.fecha_atencion.label_tag }} 
+                        <input type="datetime-local" name="fecha_atencion" 
+                               class="form-control" 
+                               required id="id_fecha_atencion"
+                               min="{{ min_datetime }}">
+                        <div id="fecha-error" class="invalid-feedback d-block"></div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form.consulta.label_tag }} 
+                        {{ form.consulta }}
+                    </div>
+
+                    <div class="d-grid mt-3">
+                        <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const citaForm = document.getElementById('citaForm');
+    const modalElement = document.getElementById('solicitarCitaModal');
+    const modal = new bootstrap.Modal(modalElement);
+    const fechaInput = document.getElementById('id_fecha_atencion');
+    const errorDiv = document.getElementById('fecha-error');
+
+    // --- Validación en tiempo real para la fecha/hora ---
+    fechaInput.addEventListener('input', function(e) {
+        const fechaSeleccionada = new Date(e.target.value);
+        let isValid = true;
+        let errorMessage = '';
+
+        // Limpiar errores previos
+        e.target.classList.remove('is-invalid');
+        errorDiv.textContent = '';
+
+        // No validar si la fecha aún no es válida (por ejemplo, mientras se está escribiendo)
+        if (isNaN(fechaSeleccionada.getTime())) {
+            return;
+        }
+
+        // Validar que no sea domingo (getDay() en JS: 0 es domingo)
+        if (fechaSeleccionada.getDay() === 0) {
+            isValid = false;
+            errorMessage = 'No se pueden agendar citas en domingo. Por favor, elige otro día.';
+        } else {
+            // Validar la hora solo si el día es válido
+            const hora = fechaSeleccionada.getHours();
+            if (hora < 8 || hora >= 16) {
+                isValid = false;
+                errorMessage = 'El horario de atención es de 8:00 AM a 4:00 PM. Por favor, elige una hora válida.';
+            }
+        }
+        
+        if (!isValid) {
+            e.target.classList.add('is-invalid');
+            errorDiv.textContent = errorMessage;
+        }
+    });
+
+    // --- Envío del formulario con AJAX y SweetAlert ---
+    citaForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(citaForm);
+        const url = citaForm.getAttribute('action');
+
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                modal.hide();
+                citaForm.reset();
+                fechaInput.classList.remove('is-invalid');
+                errorDiv.textContent = '';
+
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Solicitud Enviada!',
+                    text: 'Tu solicitud de cita ha sido enviada con éxito. El estudiante se pondrá en contacto contigo.',
+                    confirmButtonText: 'Entendido'
+                });
+            } else if (data.status === 'error') {
+                let errorHtml = '<ul class="text-start" style="list-style-type: none; padding-left: 0;">';
+                for (const field in data.errors) {
+                    errorHtml += `<li>- ${data.errors[field]}</li>`;
+                }
+                errorHtml += '</ul>';
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de Validación',
+                    html: errorHtml,
+                    confirmButtonText: 'Corregir'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algo salió mal al enviar el formulario. Por favor, inténtalo de nuevo.'
+            });
+        });
+    });
+});
+</script>
 {% endblock %}
