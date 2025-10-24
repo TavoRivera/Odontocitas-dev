@@ -66,7 +66,7 @@ def detalle_oferta(request, oferta_id):
 def crear_oferta(request):
     if not hasattr(request.user, 'perfil') or not request.user.perfil.es_estudiante:
         messages.warning(request, 'Acción no permitida. Solo los perfiles de estudiante pueden crear tratamientos.')
-        return redirect('home') # O a donde consideres apropiado
+        return redirect('home')
 
     if request.method == 'POST':
         form = OfertaForm(request.POST, request.FILES)
@@ -74,6 +74,7 @@ def crear_oferta(request):
             oferta = form.save(commit=False)
             oferta.estudiante = request.user.perfil
             oferta.save()
+            messages.success(request, f'El tratamiento "{oferta.titulo}" se ha creado exitosamente.')
             return redirect('mis_ofertas')
     else:
         form = OfertaForm()
@@ -87,7 +88,6 @@ def mis_ofertas(request):
         perfil_usuario = request.user.perfil
         ofertas_del_usuario = Oferta.objects.filter(estudiante=perfil_usuario).order_by('-fecha_actualizacion')
     except AttributeError:
-        # Si el usuario no tiene perfil, la lista de ofertas estará vacía
         ofertas_del_usuario = []
 
     return render(request, 'ofertas/mis_ofertas.html', {'ofertas': ofertas_del_usuario})

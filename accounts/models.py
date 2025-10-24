@@ -40,3 +40,12 @@ class Perfil(models.Model):
     
     def __str__(self):
         return f'Perfil de {self.user.username}'
+
+    @property
+    def es_estudiante(self):
+        """
+        Determina si el perfil corresponde a un estudiante activo.
+        Se considera estudiante si su nivel académico está entre 1er y 5to año.
+        """
+        student_levels = ['1_ANO', '2_ANO', '3_ANO', '4_ANO', '5_ANO']
+        return self.nivel_academico in student_levels

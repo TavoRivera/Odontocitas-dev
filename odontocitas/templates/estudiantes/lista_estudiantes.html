@@ -13,7 +13,7 @@
     <div class="profiles-grid">
         {% for perfil in perfiles %}
         <div class="profile-card">
-            <img src="{% if perfil.foto_perfil %}{{ perfil.foto_perfil.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Foto de {{ perfil.nombre_completo }}" class="profile-photo">
+            <img src="{% if perfil.foto_perfil %}{{ perfil.foto_perfil.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Foto de {{ perfil.nombre_completo }}" class="profile-photo" loading="lazy">
             <h3 class="profile-name">{{ perfil.nombre_completo|default:perfil.user.username }}</h3>
             <p class="profile-specialty">{{ perfil.get_nivel_academico_display|default:'Nivel no especificado' }}</p>
             

@@ -29,22 +29,22 @@
         </div>
     {% endif %}
 
-    <div class="row">
+    <div class="row mb-5">
         <!-- Columna de la Imagen -->
-        <div class="col-lg-7 mb-4">
+        <div class="col-md-5 mb-4">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body p-0">
                     {% if oferta.imagen and oferta.imagen.url %}
-                        <img src="{{ oferta.imagen.url }}" alt="Imagen principal de {{ oferta.titulo }}" class="img-fluid rounded">
+                        <img src="{{ oferta.imagen.url }}" alt="Imagen principal de {{ oferta.titulo }}" class="img-fluid" style="width: 100%; object-fit: cover; border-radius: var(--bs-card-inner-border-radius);">
                     {% else %}
-                        <img src="{% static 'images/placeholder.png' %}" alt="Sin imagen disponible" class="img-fluid rounded">
+                        <img src="{% static 'images/placeholder.png' %}" alt="Sin imagen disponible" class="img-fluid" style="width: 100%; object-fit: cover; border-radius: var(--bs-card-inner-border-radius);">
                     {% endif %}
                 </div>
             </div>
         </div>
 
         <!-- Columna de Información del Tratamiento -->
-        <div class="col-lg-5">
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-body">
                     <span class="badge bg-primary mb-2">{{ oferta.get_categoria_display }}</span>
@@ -116,7 +116,7 @@
                     </div>
 
                     <div class="d-grid mt-3">
-                        <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+                        <button type="submit" class="btn btn-primary">Enviar Solicitud</button
                     </div>
                 </form>
             </div>

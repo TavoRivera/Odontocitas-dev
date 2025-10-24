@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -31,7 +32,8 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            messages.success(request, f'El usuario "{user.username}" ha sido creado exitosamente.')
             return redirect('lista_usuarios')
     else:
         form = RegistrationForm()
@@ -44,6 +46,7 @@ def editar_usuario(request, user_id):
         form = UserEditForm(request.POST, instance=edited_user)
         if form.is_valid():
             form.save()
+            messages.success(request, f'El usuario "{edited_user.username}" ha sido actualizado exitosamente.')
             return redirect('lista_usuarios')
     else:
         form = UserEditForm(instance=edited_user)
@@ -53,7 +56,9 @@ def editar_usuario(request, user_id):
 def eliminar_usuario(request, user_id):
     user_to_delete = get_object_or_404(User, id=user_id)
     if request.method == 'POST':
+        username = user_to_delete.username
         user_to_delete.delete()
+        messages.success(request, f'El usuario "{username}" ha sido eliminado exitosamente.')
         return redirect('lista_usuarios')
     return render(request, 'registration/eliminar_usuario.html', {'user_to_delete': user_to_delete})
 
@@ -69,7 +74,8 @@ def edit_profile(request):
         form = PerfilForm(request.POST, request.FILES, instance=perfil)
         if form.is_valid():
             form.save()
-            return redirect('/')
+            messages.success(request, 'Tu perfil ha sido actualizado exitosamente.')
+            return redirect('edit_profile') # Redirige a la misma página para ver el mensaje
     else:
         form = PerfilForm(instance=perfil)
 

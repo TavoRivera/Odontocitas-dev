@@ -2,9 +2,9 @@
 <div class="oferta-card">
     <div class="oferta-card-imagen-wrapper">
         {% if oferta.imagen and oferta.imagen.url %}
-            <img src="{{ oferta.imagen.url }}" alt="Imagen de {{ oferta.titulo }}" class="oferta-card-imagen">
+            <img src="{{ oferta.imagen.url }}" alt="Imagen de {{ oferta.titulo }}" class="oferta-card-imagen" loading="lazy">
         {% else %}
-            <img src="{% static 'images/placeholder.png' %}" alt="Sin imagen" class="oferta-card-imagen">
+            <img src="{% static 'images/placeholder.png' %}" alt="Sin imagen" class="oferta-card-imagen" loading="lazy">
         {% endif %}
         <span class="oferta-card-categoria">{{ oferta.get_categoria_display }}</span>
     </div>
@@ -15,9 +15,9 @@
             <div class="oferta-card-propietario">
                 <a href="{% url 'detalle_estudiante' user_id=oferta.estudiante.user.id %}">
                     {% if oferta.estudiante.foto_perfil and oferta.estudiante.foto_perfil.url %}
-                        <img src="{{ oferta.estudiante.foto_perfil.url }}" alt="Foto de {{ oferta.estudiante.nombre_completo }}" class="propietario-avatar">
+                        <img src="{{ oferta.estudiante.foto_perfil.url }}" alt="Foto de {{ oferta.estudiante.nombre_completo }}" class="propietario-avatar" loading="lazy">
                     {% else %}
-                        <img src="{% static 'images/default_avatar.png' %}" alt="Avatar por defecto" class="propietario-avatar">
+                        <img src="{% static 'images/default_avatar.png' %}" alt="Avatar por defecto" class="propietario-avatar" loading="lazy">
                     {% endif %}
                     <span>{{ oferta.estudiante.nombre_completo|default:oferta.estudiante.user.username }}</span>
                 </a>
