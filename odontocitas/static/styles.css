@@ -10,7 +10,7 @@ html {
 
 /* Paleta de colores */
 :root {
-    --primary-blue: #007bff;
+    --primary-blue: #0810A2;
     --light-cyan: #a7e3ff;
     --light-red: #ffb3b3;
     --danger-red: #dc3545;
@@ -39,6 +39,10 @@ body {
     color: var(--text-color);
     margin: 0;
     padding-top: 80px;
+}
+
+h1 {
+    color: var(--primary-blue);
 }
 
 .container {
@@ -81,8 +85,8 @@ body {
 
 
 /* Botones de Logout */
-.logout-button { background: var(--light-red); color: var(--white); border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: background-color 0.3s ease; }
-.logout-button:hover { background-color: #e69898; }
+.logout-button { background: var(--danger-red); color: var(--white); border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: background-color 0.3s ease; }
+.logout-button:hover { background-color: var(--danger-red-hover); }
 .logout-button-mobile { background: transparent; color: var(--text-light); width: 100%; padding: 15px 2rem; border: none; text-align: right; font-size: 1.1rem; font-weight: 600; transition: background-color 0.3s ease; cursor: pointer; }
 .logout-button-mobile:hover { background-color: var(--primary-blue); }
 
