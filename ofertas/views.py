@@ -5,23 +5,19 @@ from .models import Oferta, CATEGORIAS_CHOICES, Cita
 from .forms import OfertaForm, CitaForm
 from django.db.models import Q
 from django.http import JsonResponse
-import datetime
+from django.views.decorators.http import require_POST
+from django.utils import timezone
 
 def lista_ofertas(request):
     """
     Muestra una lista de todas las ofertas, con capacidad de búsqueda y filtrado.
     """
-    # 1. Obtener el estado del filtro de disponibilidad desde la URL
     mostrar_todos = request.GET.get('mostrar_todos') == 'true'
-
-    # 2. Empezar con el filtro base de ofertas disponibles
     ofertas = Oferta.objects.filter(disponible=True)
 
-    # 3. Aplicar el filtro de disponibilidad del estudiante, a menos que se indique lo contrario
     if not mostrar_todos:
         ofertas = ofertas.filter(estudiante__disponible_para_citas=True)
 
-    # Mantener los filtros existentes de búsqueda y categoría
     query = request.GET.get('q')
     categoria_seleccionada = request.GET.get('categoria')
 
@@ -33,18 +29,16 @@ def lista_ofertas(request):
     if categoria_seleccionada:
         ofertas = ofertas.filter(categoria=categoria_seleccionada)
         
-    # Ordenar los resultados
     ofertas = ofertas.order_by('-fecha_actualizacion')
 
     categorias = CATEGORIAS_CHOICES
 
-    # 4. Pasar el estado del filtro a la plantilla
     context = {
         'ofertas': ofertas,
         'categorias': categorias,
         'query_actual': query,
         'categoria_seleccionada': categoria_seleccionada,
-        'mostrar_todos': mostrar_todos,  # Para saber el estado del checkbox
+        'mostrar_todos': mostrar_todos,
     }
     
     return render(request, 'ofertas/lista_ofertas.html', context)
@@ -57,22 +51,18 @@ def detalle_oferta(request, oferta_id):
         if form.is_valid():
             cita = form.save(commit=False)
             cita.oferta = oferta
-            cita.estudiante = oferta.estudiante
             cita.save()
             return JsonResponse({'status': 'success'})
         else:
-            errors = {field: error[0] for field, error in form.errors.items()}
-            return JsonResponse({'status': 'error', 'errors': errors})
+            return JsonResponse({'status': 'error', 'errors': form.errors})
 
-    else:
-        form = CitaForm()
-
-    min_datetime_str = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
+    form = CitaForm()
+    min_datetime = timezone.now().strftime('%Y-%m-%dT%H:%M')
+    form.fields['fecha_atencion'].widget.attrs['min'] = min_datetime
 
     context = {
         'oferta': oferta,
         'form': form,
-        'min_datetime': min_datetime_str
     }
     return render(request, 'ofertas/detalle_oferta.html', context)
 
@@ -137,3 +127,44 @@ def editar_oferta(request, pk):
         'oferta': oferta
     }
     return render(request, 'ofertas/editar_oferta.html', context)
+
+@login_required
+def lista_solicitudes_citas(request):
+    """
+    Muestra al estudiante las citas solicitadas, separadas en pendientes y atendidas.
+    """
+    if not hasattr(request.user, 'perfil'):
+        messages.error(request, 'No tienes un perfil de estudiante para ver esta página.')
+        return redirect('lista_ofertas')
+
+    # Usamos select_related para optimizar la consulta y evitar N+1 queries
+    todas_las_citas = Cita.objects.filter(oferta__estudiante=request.user.perfil).select_related('oferta').order_by('-fecha_creacion')
+
+    citas_pendientes = todas_las_citas.filter(atendida=False)
+    citas_atendidas = todas_las_citas.filter(atendida=True)
+
+    context = {
+        'citas_pendientes': citas_pendientes,
+        'citas_atendidas': citas_atendidas,
+    }
+    return render(request, 'ofertas/lista_solicitudes.html', context)
+
+@login_required
+@require_POST # Asegura que esta vista solo acepte peticiones POST
+def marcar_cita_atendida(request, cita_id):
+    """ Marca una cita como atendida. """
+    cita = get_object_or_404(Cita, pk=cita_id, oferta__estudiante=request.user.perfil)
+    cita.atendida = True
+    cita.save()
+    messages.success(request, f"La cita para '{cita.nombre_paciente}' ha sido marcada como atendida.")
+    return redirect('lista_solicitudes')
+
+@login_required
+@require_POST # Asegura que esta vista solo acepte peticiones POST
+def eliminar_cita(request, cita_id):
+    """ Elimina una solicitud de cita. """
+    cita = get_object_or_404(Cita, pk=cita_id, oferta__estudiante=request.user.perfil)
+    nombre_paciente = cita.nombre_paciente
+    cita.delete()
+    messages.success(request, f"La solicitud de cita de '{nombre_paciente}' ha sido eliminada.")
+    return redirect('lista_solicitudes')

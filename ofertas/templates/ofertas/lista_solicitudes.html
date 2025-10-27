@@ -1,0 +1,212 @@
+{% extends 'layout.html' %}
+{% load tz %}
+
+{% block title %}Mis Solicitudes de Citas{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Mis Solicitudes de Citas</h1>
+
+    <!-- Sección de Citas Pendientes -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-header bg-danger text-white">
+            <h2 class="h5 mb-0">Citas Pendientes</h2>
+        </div>
+        <div class="card-body">
+            {% if citas_pendientes %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Tratamiento</th>
+                                <th>Paciente</th>
+                                <th>Fecha Solicitud</th>
+                                <th>Fecha Propuesta</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cita in citas_pendientes %}
+                            <tr>
+                                <td>{{ cita.oferta.titulo }}</td>
+                                <td>{{ cita.nombre_paciente }}</td>
+                                <td>{{ cita.fecha_creacion|date:"d/m/Y" }}</td>
+                                <td>
+                                    {% timezone "America/Managua" %}
+                                        {{ cita.fecha_atencion|date:"d/m/Y h:i A" }}
+                                    {% endtimezone %}
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-warning btn-sm ver-cita-btn"
+                                            data-bs-toggle="modal" data-bs-target="#detalleCitaModal"
+                                            data-oferta-id="{{ cita.oferta.id }}"
+                                            data-oferta-titulo="{{ cita.oferta.titulo }}"
+                                            data-paciente="{{ cita.nombre_paciente }}"
+                                            data-telefono="{{ cita.telefono_paciente }}"
+                                            data-email="{{ cita.email_paciente|default:'' }}"
+                                            data-fecha-solicitud="{{ cita.fecha_creacion|date:'d/m/Y H:i' }}"
+                                            data-fecha-cita="{% timezone 'America/Managua' %}{{ cita.fecha_atencion|date:'d/m/Y h:i A' }}{% endtimezone %}"
+                                            data-consulta="{{ cita.consulta|linebreaksbr|default:'Sin consulta adicional.' }}">
+                                        <i class="bi bi-eye"></i> Ver
+                                    </button>
+                                    <form action="{% url 'marcar_cita_atendida' cita.id %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success btn-sm">
+                                            <i class="bi bi-check-lg"></i> Atender
+                                        </button>
+                                    </form>
+                                    <form action="{% url 'eliminar_cita' cita.id %}" method="post" class="d-inline" onsubmit="return confirm('¿Estás seguro de eliminar esta solicitud?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">No tienes ninguna cita pendiente.</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Sección de Citas Atendidas -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h2 class="h5 mb-0">Historial de Citas Atendidas</h2>
+        </div>
+        <div class="card-body">
+            {% if citas_atendidas %}
+                <div class="table-responsive">
+                     <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Tratamiento</th>
+                                <th>Paciente</th>
+                                <th>Fecha de Atención</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cita in citas_atendidas %}
+                            <tr>
+                                <td>{{ cita.oferta.titulo }}</td>
+                                <td>{{ cita.nombre_paciente }}</td>
+                                <td>{% timezone "America/Managua" %}{{ cita.fecha_atencion|date:"d/m/Y h:i A" }}{% endtimezone %}</td>
+                                <td class="text-center"><span class="badge bg-success">Completada</span></td>
+                                <td class="text-center">
+                                     <button type="button" class="btn btn-warning btn-sm ver-cita-btn"
+                                            data-bs-toggle="modal" data-bs-target="#detalleCitaModal"
+                                            data-oferta-id="{{ cita.oferta.id }}"
+                                            data-oferta-titulo="{{ cita.oferta.titulo }}"
+                                            data-paciente="{{ cita.nombre_paciente }}"
+                                            data-telefono="{{ cita.telefono_paciente }}"
+                                            data-email="{{ cita.email_paciente|default:'' }}"
+                                            data-fecha-solicitud="{{ cita.fecha_creacion|date:'d/m/Y H:i' }}"
+                                            data-fecha-cita="{% timezone 'America/Managua' %}{{ cita.fecha_atencion|date:'d/m/Y h:i A' }}{% endtimezone %}"
+                                            data-consulta="{{ cita.consulta|linebreaksbr|default:'Sin consulta adicional.' }}">
+                                        <i class="bi bi-eye"></i> Ver
+                                    </button>
+                                    <form action="{% url 'eliminar_cita' cita.id %}" method="post" class="d-inline" onsubmit="return confirm('¿Estás seguro de eliminar esta cita del historial? Esta acción no se puede deshacer.');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-secondary">Aún no tienes un historial de citas.</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal para ver el Detalle de la Cita -->
+<div class="modal fade" id="detalleCitaModal" tabindex="-1" aria-labelledby="detalleCitaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalleCitaModalLabel">Detalles de la Solicitud</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="fw-bold">Tratamiento:</h6>
+                <p id="modal-oferta"></p>
+
+                <h6 class="fw-bold">Nombre del Paciente:</h6>
+                <p id="modal-paciente"></p>
+
+                <h6 class="fw-bold">Teléfono de Contacto:</h6>
+                <p id="modal-telefono"></p>
+
+                <h6 class="fw-bold">Correo Electrónico:</h6>
+                <p id="modal-email"></p>
+
+                <h6 class="fw-bold">Fecha de la Solicitud:</h6>
+                <p id="modal-fecha-solicitud"></p>
+
+                <h6 class="fw-bold">Fecha Propuesta para la Cita:</h6>
+                <p id="modal-fecha-cita"></p>
+
+                <h6 class="fw-bold">Consulta del Paciente:</h6>
+                <blockquote class="blockquote bg-light p-3 rounded">
+                    <p id="modal-consulta"></p>
+                </blockquote>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const detalleCitaModal = document.getElementById('detalleCitaModal');
+    detalleCitaModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+
+        // Extraer información de los atributos data-*
+        const ofertaId = button.getAttribute('data-oferta-id');
+        const ofertaTitulo = button.getAttribute('data-oferta-titulo');
+        const paciente = button.getAttribute('data-paciente');
+        const telefono = button.getAttribute('data-telefono');
+        const email = button.getAttribute('data-email');
+        const fechaSolicitud = button.getAttribute('data-fecha-solicitud');
+        const fechaCita = button.getAttribute('data-fecha-cita');
+        const consulta = button.getAttribute('data-consulta');
+
+        // Construir URLs dinámicamente
+        const ofertaUrl = `/ofertas/${ofertaId}/`;
+        const telLink = `tel:${telefono}`;
+        const mailLink = `mailto:${email}`;
+
+        // Actualizar el contenido del modal con los hipervínculos
+        this.querySelector('#modal-oferta').innerHTML = `<a href="${ofertaUrl}">${ofertaTitulo}</a>`;
+        this.querySelector('#modal-paciente').textContent = paciente;
+        this.querySelector('#modal-telefono').innerHTML = `<a href="${telLink}">${telefono}</a>`;
+        
+        if (email) {
+            this.querySelector('#modal-email').innerHTML = `<a href="${mailLink}">${email}</a>`;
+        } else {
+            this.querySelector('#modal-email').textContent = 'No proporcionado';
+        }
+
+        this.querySelector('#modal-fecha-solicitud').textContent = fechaSolicitud;
+        this.querySelector('#modal-fecha-cita').textContent = fechaCita;
+        this.querySelector('#modal-consulta').innerHTML = consulta; // innerHTML para respetar los <br>
+    });
+});
+</script>
+{% endblock %}

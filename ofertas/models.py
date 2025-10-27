@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import Perfil
+from django.utils import timezone
 
 # --- ¡CORRECCIÓN! Se mueve la lista fuera de la clase ---
 CATEGORIAS_CHOICES = [
@@ -13,8 +14,6 @@ CATEGORIAS_CHOICES = [
 ]
 
 class Oferta(models.Model):
-    # La lista de categorías ya no está aquí.
-
     titulo = models.CharField(max_length=255)
     descripcion = models.TextField()
     estudiante = models.ForeignKey(
@@ -23,7 +22,6 @@ class Oferta(models.Model):
         max_length=100,
         help_text='Indica un precio p.e. 100.00 o escribe "A convenir", "Gratis", etc.'
     )
-    # El campo 'choices' sigue funcionando porque la constante está en el mismo módulo.
     categoria = models.CharField(
         max_length=50,
         choices=CATEGORIAS_CHOICES,
@@ -38,12 +36,18 @@ class Oferta(models.Model):
         return self.titulo
 
 class Cita(models.Model):
+    oferta = models.ForeignKey(Oferta, on_delete=models.CASCADE, related_name='citas')
     nombre_paciente = models.CharField(max_length=255)
     telefono_paciente = models.CharField(max_length=20)
     email_paciente = models.EmailField(blank=True, null=True)
-    fecha_atencion = models.DateTimeField(blank=True, null=True)
+    # --- CAMPO CORREGIDO CON VALOR POR DEFECTO ---
+    fecha_atencion = models.DateTimeField(
+        default=timezone.now, 
+        help_text="Fecha y hora propuesta por el paciente para la cita."
+    )
     consulta = models.TextField(blank=True, null=True)
+    atendida = models.BooleanField(default=False)  # Campo para marcar si la cita fue atendida
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Cita para {self.nombre_paciente} el {self.fecha_atencion.strftime('%d/%m/%Y') if self.fecha_atencion else 'fecha pendiente'}"
+        return f"Solicitud de {self.nombre_paciente} para '{self.oferta.titulo}'"
