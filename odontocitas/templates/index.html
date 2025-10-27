@@ -49,7 +49,7 @@
     </section>
 
     <!-- Clinic Info Section with Carousel -->
-    <section class="home-section clinic-info-section-home">
+    <section class="home-section clinic-info-section-home animate-on-scroll">
         <div class="container">
             <h2 class="section-title-home">Nuestra Clínica</h2>
             <p class="section-subtitle-home">
@@ -86,7 +86,7 @@
     </section>
 
     <!-- Mission, Vision & Values Section -->
-    <section class="home-section">
+    <section class="home-section animate-on-scroll">
         <div class="container">
             <div class="feature-cards-container">
                 <div class="feature-card-home">
@@ -120,7 +120,7 @@ preprofesionales bajo los más altos estándares de calidad.</p>
     </section>
 
     <!-- Ofertas Recientes Section -->
-    <section class="home-section popular-services-section-home">
+    <section class="home-section popular-services-section-home animate-on-scroll">
         <div class="container">
             <h2 class="section-title-home">Tratamientos Recientes</h2>
             <p class="section-subtitle-home">Explora los últimos servicios publicados por nuestros estudiantes y encuentra el tratamiento perfecto para ti.</p>
@@ -146,4 +146,27 @@ preprofesionales bajo los más altos estándares de calidad.</p>
     </section>
 
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Optional: Unobserve the element after it has been animated
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1 // Trigger when 10% of the element is visible
+    });
+
+    animatedElements.forEach(element => {
+        observer.observe(element);
+    });
+});
+</script>
+
 {% endblock %}

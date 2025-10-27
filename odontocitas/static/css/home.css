@@ -6,6 +6,9 @@
 :root {
     --primary-blue: #0810A2;
     --light-blue: #56a9e3;
+    --strong-red: #dc3545; /* Rojo para el botón principal */
+    --darker-red: #c82333; /* Rojo más oscuro para el hover */
+    --warning-yellow: #FFC107; /* Amarillo para el botón secundario */
     --light-red: #ffb3b3;
     --dark-text: #333;
     --light-text: #f8f9fa;
@@ -19,16 +22,6 @@
     to { opacity: 1; }
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 /* Main Container */
 .home-page-container {
@@ -74,15 +67,42 @@
     border-radius: 50px;
     font-weight: 600;
     margin: 0 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease; /* Transición para todos los efectos */
     display: inline-block;
-    border: 2px solid transparent;
+    border: 2px solid transparent; /* Borde transparente por defecto */
 }
 
 .hero-buttons-home .btn-home:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
+
+/* Estilo para el primer botón: fondo rojo */
+.hero-buttons-home .btn-home:first-child {
+    background-color: var(--strong-red);
+    border-color: var(--strong-red);
+    color: var(--light-text); /* Texto blanco para contraste */
+}
+
+/* Efecto hover para el primer botón */
+.hero-buttons-home .btn-home:first-child:hover {
+    background-color: var(--darker-red);
+    border-color: var(--darker-red);
+}
+
+/* Estilo para el botón secundario: fondo amarillo */
+.hero-buttons-home .btn-secondary-home {
+    background-color: var(--warning-yellow);
+    color: var(--dark-text); /* Texto oscuro para legibilidad */
+    border-color: var(--warning-yellow);
+}
+
+/* Efecto hover para el botón secundario */
+.hero-buttons-home .btn-secondary-home:hover {
+    background-color: #ffca2c; /* Amarillo un poco más oscuro */
+    border-color: #ffca2c;
+}
+
 
 /* Hero Contact Info Bar */
 .hero-contact-info {
@@ -151,6 +171,18 @@ a.contact-info-item:hover {
     color: #666;
     max-width: 700px;
     margin: 0 auto 50px auto;
+}
+
+/* Scroll Animation Styles */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Clinic Info Section */
