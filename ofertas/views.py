@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -12,8 +11,17 @@ def lista_ofertas(request):
     """
     Muestra una lista de todas las ofertas, con capacidad de búsqueda y filtrado.
     """
-    ofertas = Oferta.objects.filter(disponible=True).order_by('-fecha_actualizacion')
-    
+    # 1. Obtener el estado del filtro de disponibilidad desde la URL
+    mostrar_todos = request.GET.get('mostrar_todos') == 'true'
+
+    # 2. Empezar con el filtro base de ofertas disponibles
+    ofertas = Oferta.objects.filter(disponible=True)
+
+    # 3. Aplicar el filtro de disponibilidad del estudiante, a menos que se indique lo contrario
+    if not mostrar_todos:
+        ofertas = ofertas.filter(estudiante__disponible_para_citas=True)
+
+    # Mantener los filtros existentes de búsqueda y categoría
     query = request.GET.get('q')
     categoria_seleccionada = request.GET.get('categoria')
 
@@ -25,13 +33,18 @@ def lista_ofertas(request):
     if categoria_seleccionada:
         ofertas = ofertas.filter(categoria=categoria_seleccionada)
         
+    # Ordenar los resultados
+    ofertas = ofertas.order_by('-fecha_actualizacion')
+
     categorias = CATEGORIAS_CHOICES
 
+    # 4. Pasar el estado del filtro a la plantilla
     context = {
         'ofertas': ofertas,
         'categorias': categorias,
         'query_actual': query,
         'categoria_seleccionada': categoria_seleccionada,
+        'mostrar_todos': mostrar_todos,  # Para saber el estado del checkbox
     }
     
     return render(request, 'ofertas/lista_ofertas.html', context)

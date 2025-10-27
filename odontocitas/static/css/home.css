@@ -141,7 +141,7 @@ a.contact-info-item:hover {
     text-align: center;
     font-size: 2.5rem;
     font-weight: 600;
-    color: #0056b3; /* Darker blue */
+    color: var(--primary-blue); /* Darker blue */
     margin-bottom: 15px;
 }
 
