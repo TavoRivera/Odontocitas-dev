@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -64,9 +65,9 @@ def detalle_oferta(request, oferta_id):
 
 @login_required
 def crear_oferta(request):
-    if not hasattr(request.user, 'perfil') or not request.user.perfil.es_estudiante:
-        messages.warning(request, 'Acción no permitida. Solo los perfiles de estudiante pueden crear tratamientos.')
-        return redirect('home')
+    if not hasattr(request.user, 'perfil'):
+        messages.warning(request, 'Acción no permitida. Debes tener un perfil para poder crear un tratamiento.')
+        return redirect('lista_ofertas')
 
     if request.method == 'POST':
         form = OfertaForm(request.POST, request.FILES)

@@ -3,10 +3,12 @@ from accounts.models import Perfil
 
 # --- ¡CORRECCIÓN! Se mueve la lista fuera de la clase ---
 CATEGORIAS_CHOICES = [
-    ('limpieza', 'Limpieza Dental'),
-    ('blanqueamiento', 'Blanqueamiento Dental'),
-    ('extraccion', 'Extracción Dental'),
+    ('odontologia_general', 'Odontología General y Preventiva'),
+    ('odontologia_restauradora', 'Odontología Restauradora'),
     ('endodoncia', 'Endodoncia'),
+    ('periodoncia', 'Periodoncia'),
+    ('prostodoncia', 'Prostodoncia (Rehabilitación Oral)'),
+    ('cirugia_oral', 'Cirugía Oral Básica'),
     ('ortodoncia', 'Ortodoncia'),
 ]
 
