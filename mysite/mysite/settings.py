@@ -1,11 +1,17 @@
 
 import os
+import sys
 from pathlib import Path
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # La ruta base ahora debe apuntar dos niveles más arriba
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+# Añadir el directorio raíz del proyecto (un nivel arriba de 'mysite') al PYTHONPATH
+# para que Django pueda encontrar las apps 'accounts' y 'ofertas'.
+sys.path.append(str(BASE_DIR))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
