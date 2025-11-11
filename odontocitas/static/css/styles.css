@@ -7,357 +7,54 @@ TABLE OF CONTENTS
 3.  Main Content & Footer
 4.  Form Styling (reusable)
 5.  Home Page Styles (scoped)
-    - Hero Section
-    - Info Section
-    - Mission/Vision Section
-    - Services Section
 6.  Student List / Dashboard Styles
-7.  Responsive Design
+7.  Oferta Card Styles
+8.  Profile Detail Page
+9.  Responsive Design
 ========================================
 */
 
 /* 1. GLOBAL STYLES & TYPOGRAPHY */
-body {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f8f9fa; /* A very light grey for the whole page */
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-}
+body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: #202124; background-color: #f8f9fa; }
+h1, h2, h3, h4, h5, h6 { font-weight: 600; }
 
 /* 2. NAVBAR */
-.navbar {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: background-color 0.3s ease;
-}
-
-.navbar-brand {
-    font-weight: 700;
-    font-size: 1.5rem;
-}
-
-.nav-link {
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: #007bff;
-}
+.navbar { box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.navbar-brand { font-weight: 700; font-size: 1.5rem; }
 
 /* 3. MAIN CONTENT & FOOTER */
-.main-content {
-    padding-top: 70px; /* Adjust for fixed-top navbar */
-}
+.main-content { padding-top: 70px; }
+footer { background-color: #e9ecef; }
 
-footer {
-    background-color: #e9ecef;
-}
-
-/* 4. FORM STYLING */
-.form-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-.form-header h2 {
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.form-header p {
-    color: #666;
-    margin-bottom: 25px;
-}
-
-.modern-form .form-field {
-    margin-bottom: 20px;
-}
-
-.modern-form .form-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #555;
-}
-
-.modern-form .field-wrapper input[type="text"],
-.modern-form .field-wrapper input[type="email"],
-.modern-form .field-wrapper input[type="password"] {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.modern-form .field-wrapper input:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
-}
-
-.btn-primary {
-    padding: 12px 25px;
-    border-radius: 8px;
-    transition: background-color 0.3s, transform 0.2s;
-}
+/* 4. FORM STYLING (Global) */
+.form-container { max-width: 600px; margin: 40px auto; padding: 30px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+.btn-primary { background-color: #1a73e8; border-color: #1a73e8; border-radius: 8px; font-weight: 600; }
+.btn-primary:hover { background-color: #1865c9; border-color: #1865c9; }
 
 /* 5. HOME PAGE STYLES */
-.home-page-container .hero-section-home {
-    color: white;
-    text-align: center;
-    padding: 120px 20px;
-    background: linear-gradient(135deg, #a7e3ff 0%, #007bff 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: -70px; /* Overlap the navbar space */
-}
-
-.home-page-container .hero-content {
-    max-width: 800px;
-}
-
-.home-page-container .hero-title-home {
-    font-size: 3.5rem;
-    font-weight: 700;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.home-page-container .hero-subtitle-home {
-    font-size: 1.25rem;
-    font-weight: 300;
-    margin-bottom: 30px;
-}
-
-.home-page-container .hero-buttons-home .btn-home {
-    text-decoration: none;
-    color: #fff;
-    padding: 15px 30px;
-    border-radius: 50px;
-    font-weight: 600;
-    margin: 0 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: inline-block;
-    border: 2px solid transparent;
-}
-
-.home-page-container .hero-buttons-home .btn-primary-home {
-    background-color: white;
-    color: #007bff;
-}
-.home-page-container .hero-buttons-home .btn-primary-home:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-}
-
-.home-page-container .hero-buttons-home .btn-secondary-home {
-    border-color: white;
-}
-.home-page-container .hero-buttons-home .btn-secondary-home:hover {
-    background-color: white;
-    color: #007bff;
-    transform: translateY(-5px);
-}
-
-.home-page-container .clinic-info-section-home, 
-.home-page-container .mission-vision-section-home,
-.home-page-container .popular-services-section-home {
-    padding: 80px 0;
-}
-
-.home-page-container .clinic-info-section-home { background-color: #ffffff; }
-
-.home-page-container .info-content {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-}
-
-.home-page-container .info-image img {
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.home-page-container .feature-cards {
-    display: flex;
-    gap: 30px;
-    justify-content: center;
-}
-
-.home-page-container .feature-card-home {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 12px;
-    text-align: center;
-    flex: 1;
-    max-width: 400px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    border-top: 5px solid #a7e3ff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.home-page-container .feature-card-home:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-}
-.home-page-container .feature-card-home:nth-child(2) { border-top-color: #ffb3b3; }
-
-.home-page-container .card-icon { font-size: 3rem; color: #007bff; margin-bottom: 20px; }
-.home-page-container .card-title-home { font-size: 1.5rem; font-weight: 600; color: #0056b3; margin-bottom: 15px; }
+.home-page-container .hero-section-home { color: white; text-align: center; padding: 120px 20px; background: linear-gradient(135deg, #a7e3ff 0%, #007bff 100%); margin-top: -70px; }
 
 /* 6. STUDENT LIST / DASHBOARD STYLES */
-.table-responsive {
-    margin-top: 30px;
-}
+.page-header { padding-bottom: 9px; margin: 40px 0 20px; border-bottom: 1px solid #eee; }
 
-.page-header {
-    padding-bottom: 9px;
-    margin: 40px 0 20px;
-    border-bottom: 1px solid #eee;
-}
+/* 7. OFERTA CARD STYLES */
+.oferta-card { background-color: #fff; border-radius: 12px; border: 1px solid #e0e0e0; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
+.ofertas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; padding: 20px 0; }
 
-/* 7. RESPONSIVE DESIGN */
+/* 8. PROFILE DETAIL PAGE */
+.profile-detail-page { display: flex; gap: 30px; align-items: flex-start; padding: 2rem 0; }
+.profile-sidebar-v2 { flex: 0 0 320px; position: sticky; top: 90px; }
+.profile-content-v2 { flex: 1; min-width: 0; }
+.sidebar-card, .content-card-v2 { background-color: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); border: 1px solid #e9ecef; margin-bottom: 24px; }
+.verified-badge { cursor: pointer; background-color: #e7f3ff; color: #0056b3; border: 1px solid #b3d7ff; }
+
+
+/* 9. RESPONSIVE DESIGN */
 @media (max-width: 992px) {
-    .home-page-container .hero-title-home { font-size: 2.8rem; }
-    .home-page-container .info-content { flex-direction: column; }
+    .profile-detail-page { flex-direction: column; }
+    .profile-sidebar-v2 { position: static; width: 100%; flex: 0 0 auto; }
 }
-
 @media (max-width: 768px) {
-    .home-page-container .hero-title-home { font-size: 2.2rem; }
-    .home-page-container .hero-buttons-home .btn-home { width: 100%; margin-bottom: 10px; }
-    .home-page-container .feature-cards { flex-direction: column; align-items: center; }
-}
-
-/* 8. OFERTA CARD STYLES */
-/* Estilos para la tarjeta de oferta */
-.oferta-card {
-    background-color: #fff;
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
-    overflow: hidden;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.oferta-card:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    transform: translateY(-5px);
-}
-
-.oferta-card-imagen-wrapper {
-    position: relative;
-    width: 100%;
-    padding-top: 60%;
-    background-color: #f5f5f5;
-}
-
-.oferta-card-imagen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.oferta-card-categoria {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background-color: rgba(247, 71, 18, 0.733);
-    color: #fff;
-    padding: 4px 10px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    border-radius: 20px;
-    text-transform: capitalize;
-}
-
-.oferta-card-contenido {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.oferta-card-titulo {
-    font-size: 1.25rem;
-    margin: 0 0 8px 0;
-    font-weight: 700;
-}
-
-.oferta-card-titulo a {
-    text-decoration: none;
-    color: #333;
-    transition: color 0.2s ease;
-}
-
-.oferta-card-titulo a:hover {
-    color: #007bff;
-}
-
-.oferta-card-descripcion {
-    font-size: 0.95rem;
-    color: #666;
-    line-height: 1.5;
-    flex-grow: 1;
-    margin-bottom: 16px;
-}
-
-.oferta-card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid #eee;
-    padding-top: 12px;
-    margin-top: auto;
-}
-
-.oferta-card-propietario {
-    font-size: 0.9rem;
-}
-
-.oferta-card-propietario a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #555;
-    transition: color 0.2s ease;
-}
-
-.oferta-card-propietario a:hover {
-    color: #0056b3;
-}
-
-.propietario-avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 8px;
-    border: 1px solid #ddd;
-}
-
-.oferta-card-precio {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #009E60;
-}
-
-.ofertas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-    padding: 20px 0;
+    .reviews-main-header { flex-direction: column; align-items: stretch; gap: 16px; }
+    .reviews-main-header .btn { width: 100%; }
 }

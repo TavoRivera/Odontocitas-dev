@@ -1,0 +1,107 @@
+/* =================================== */
+/* 1. GOOGLE-STYLE REVIEW SECTION    */
+/* =================================== */
+.google-reviews-section-final .reviews-main-header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid #dadce0; margin-bottom: 24px; }
+.google-reviews-section-final .rating-title { font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+.google-reviews-section-final .rating-summary-line { display: flex; align-items: center; gap: 8px; }
+.google-reviews-section-final .rating-score { font-size: 1.5rem; font-weight: 700; }
+
+/* New style for the scrollable review list */
+.reviews-list-final {
+    max-height: 450px; /* Maximum height for the container */
+    overflow-y: auto;  /* Vertical scroll appears only when needed */
+    padding-right: 10px; /* Prevents the scrollbar from overlapping content */
+}
+
+.google-reviews-section-final .review-card-final { 
+    display: flex; 
+    gap: 16px; 
+    align-items: flex-start; 
+    padding: 16px 0; 
+    border-bottom: 1px solid #e0e2e6;
+    position: relative; /* Needed for positioning the delete button */
+}
+.google-reviews-section-final .review-card-final:last-child { border-bottom: none; }
+.google-reviews-section-final .review-author-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: #1a73e8; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem; flex-shrink: 0; }
+.google-reviews-section-final .review-author-info { display: flex; flex-direction: column; }
+.google-reviews-section-final .author-name { font-weight: 600; }
+.google-reviews-section-final .review-date-final { color: #5f6368; font-size: 0.875rem; }
+.google-reviews-section-final .review-text { margin-top: 8px; }
+
+/* Styles for stars in existing reviews (filled and empty) */
+.review-rating-stars { margin-top: 4px; }
+.star-filled { color: #fbbc05; }
+.star-empty { color: #ccc; }
+
+/* =================================== */
+/* 2. MODAL & STAR RATING FORM         */
+/* =================================== */
+.modal-overlay { display: none; align-items: center; justify-content: center; position: fixed; z-index: 1050; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); animation: fadeIn 0.3s; }
+.modal-content.review-modal-content { background-color: #fff; margin: auto; padding: 25px; border-radius: 12px; width: 90%; max-width: 500px; position: relative; animation: slideIn 0.4s; }
+.modal-close { color: #aaa; position: absolute; top: 15px; right: 25px; font-size: 28px; font-weight: bold; cursor: pointer; }
+.review-form input[type="text"], .review-form textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 1rem; }
+
+/* Final styles for the interactive star rating selector */
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse; /* Crucial for the hover effect */
+  justify-content: center;
+  gap: 8px;
+}
+.star-rating input {
+  display: none; /* Hide the actual radio button */
+}
+.star-rating label {
+  font-size: 2.5rem;
+  color: #ccc; /* Default star color */
+  cursor: pointer;
+  transition: color 0.2s ease-out, transform 0.2s ease-out;
+}
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #fbbc05; /* Gold color for hover and checked states */
+}
+.star-rating label:hover {
+    transform: scale(1.1);
+}
+.star-rating label.pop {
+  animation: pop 0.3s ease-out;
+}
+
+/* =================================== */
+/* 3. KEYFRAME ANIMATIONS              */
+/* =================================== */
+@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+@keyframes slideIn { from {transform: translateY(-50px);} to {transform: translateY(0);} }
+@keyframes pop { 
+  0% { transform: scale(1.1); }
+  50% { transform: scale(1.3); } 
+  100% { transform: scale(1.1); }
+}
+
+/* =================================== */
+/* 4. SUPERUSER-SPECIFIC STYLES        */
+/* =================================== */
+
+/* Container for admin actions */
+.review-actions {
+    position: absolute;
+    top: 16px;
+    right: 0;
+}
+
+/* Styling for the delete button */
+.btn-delete-review {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #a0a0a0; /* A soft, unobtrusive color */
+    font-size: 1rem;
+    padding: 5px;
+    transition: color 0.2s ease-out;
+}
+
+.btn-delete-review:hover {
+    color: #d9534f; /* A standard 'danger' red color on hover */
+}

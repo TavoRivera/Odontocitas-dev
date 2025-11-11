@@ -124,5 +124,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 24px;
-    padding: 20px 0;
+    padding: 20px 10px 20px 0; /* Padding ajustado para la barra de scroll */
+    max-height: 780px; /* Altura máxima para ~2 filas de tarjetas */
+    overflow-y: auto;
 }

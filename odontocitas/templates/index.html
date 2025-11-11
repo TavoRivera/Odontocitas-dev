@@ -1,9 +1,11 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block title %}Inicio - OdontoCitas{% endblock %}
+{% block title %}OdontoCitas | Clínica Dental y Odontología en UNAN Managua{% endblock %}
 
 {% block head %}
+<meta name="description" content="Encuentra atención dental asequible y de calidad en OdontoCitas, la clínica odontológica de la UNAN Managua. Ofrecemos una amplia gama de servicios odontológicos supervisados por especialistas. ¡Agenda tu cita hoy y mejora tu salud bucal!">
+<meta name="keywords" content="odontología, clínica dental, UNAN Managua, cuidado dental, salud bucal, dentista, servicios odontológicos, atención dental asequible, Managua, Nicaragua">
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
@@ -13,8 +15,8 @@
     <!-- Hero Section -->
     <section class="hero-section-home">
         <div class="hero-content">
-            <h1 class="hero-title-home">Aprendemos sirviendo, servimos sonriendo</h1>
-            <p class="hero-subtitle-home">Conectamos pacientes con estudiantes talentosos de odontología de la UNAN Managua para ofrecerte un cuidado dental accesible y de calidad.</p>
+            <h1 class="hero-title-home">Clínica Dental OdontoCitas en UNAN Managua</h1>
+            <p class="hero-subtitle-home">Aprendemos sirviendo, servimos sonriendo: Conectamos pacientes con estudiantes talentosos de odontología para ofrecerte un cuidado dental accesible y de calidad.</p>
             <div class="hero-buttons-home">
                 <a href="{% url 'lista_estudiantes' %}" class="btn-home">Ver Perfiles de Estudiantes</a>
                 <a href="{% url 'lista_ofertas' %}" class="btn-home btn-secondary-home">Explorar Tratamientos</a>
@@ -51,34 +53,34 @@
     <!-- Clinic Info Section with Carousel -->
     <section class="home-section clinic-info-section-home animate-on-scroll">
         <div class="container">
-            <h2 class="section-title-home">Nuestra Clínica</h2>
+            <h2 class="section-title-home">Nuestra Clínica Odontológica</h2>
             <p class="section-subtitle-home">
-                Un centro de excelencia en salud dental, combinando educación de primer nivel y atención comunitaria.
+                Un centro de excelencia en salud dental, combinando educación de primer nivel y atención comunitaria en Managua.
             </p>
             <div class="info-content-home">
                 <!-- Carousel on the left -->
                 <div class="info-image-home">
                     <div class="carousel-container">
                         <div class="carousel-slide active">
-                            <img src="{% static 'images/clinic_photo.jpg' %}" alt="Foto de la clínica 1">
+                            <img src="{% static 'images/clinic_photo.jpg' %}" alt="Interior de la clínica dental OdontoCitas en la UNAN Managua">
                         </div>
                         <div class="carousel-slide">
-                            <img src="{% static 'images/clinic_photo2.jpg' %}" alt="Foto de la clínica 2">
+                            <img src="{% static 'images/clinic_photo2.jpg' %}" alt="Estudiante de odontología atendiendo a un paciente en la clínica">
                         </div>
                         <div class="carousel-slide">
-                            <img src="{% static 'images/clinic_photo3.jpg' %}" alt="Foto de la clínica 3">
+                            <img src="{% static 'images/clinic_photo3.jpg' %}" alt="Equipamiento moderno de la clínica odontológica">
                         </div>
                     </div>
                 </div>
 
                 <!-- Text on the right -->
                 <div class="info-text-home">
-                    <h3>Bajo la experta dirección de <strong>odontólogos especialistas de la UNAN</strong></h3>
+                    <h3>Cuidado dental de calidad supervisado por <strong>odontólogos especialistas de la UNAN</strong></h3>
                     <p>
-                        Nos especializamos en una amplia gama de servicios para cuidar de tu sonrisa, incluyendo: <strong>limpiezas profundas, gingivectomía, restauraciones (calzas)</strong>, y mucho más.
+                        Nos especializamos en una amplia gama de servicios odontológicos para cuidar de tu salud bucal, incluyendo: <strong>limpiezas profundas, gingivectomía, restauraciones (calzas)</strong>, y mucho más.
                     </p>
                     <p>
-                        Nuestro compromiso es doble: formar a la próxima generación de odontólogos de excelencia y brindar a la comunidad un acceso asequible a servicios de alta calidad. Cada procedimiento es cuidadosamente supervisado por profesionales experimentados, garantizando tu seguridad y satisfacción.
+                        Nuestro compromiso es doble: formar a la próxima generación de odontólogos de excelencia y brindar a la comunidad un acceso asequible a servicios de alta calidad. Cada procedimiento es cuidadosamente supervisado por profesionales experimentados, garantizando tu seguridad y satisfacción en cada tratamiento dental.
                     </p>
                 </div>
             </div>
@@ -122,8 +124,8 @@ preprofesionales bajo los más altos estándares de calidad.</p>
     <!-- Ofertas Recientes Section -->
     <section class="home-section popular-services-section-home animate-on-scroll">
         <div class="container">
-            <h2 class="section-title-home">Tratamientos Recientes</h2>
-            <p class="section-subtitle-home">Explora los últimos servicios publicados por nuestros estudiantes y encuentra el tratamiento perfecto para ti.</p>
+            <h2 class="section-title-home">Nuestros Servicios y Tratamientos Dentales</h2>
+            <p class="section-subtitle-home">Explora los últimos servicios publicados por nuestros estudiantes y encuentra el tratamiento perfecto para tu cuidado dental.</p>
             
             {% if ofertas_recientes %}
                 <div class="ofertas-grid mt-4">
