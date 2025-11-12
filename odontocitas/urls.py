@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 # Import views from the correct apps
 from odontocitas.views import index as home_view
-from accounts.views import lista_estudiantes, detalle_estudiante, eliminar_resena
+from accounts.views import lista_estudiantes, detalle_estudiante
 
 urlpatterns = [
     # Core Admin and Home Page
@@ -22,7 +22,6 @@ urlpatterns = [
     # These are now correctly placed in the root URLconf.
     path('estudiantes/', lista_estudiantes, name='lista_estudiantes'),
     path('estudiante/<int:user_id>/', detalle_estudiante, name='detalle_estudiante'),
-    path('resena/eliminar/<int:resena_id>/', eliminar_resena, name='eliminar_resena'),
 ]
 
 # Serve static and media files during development

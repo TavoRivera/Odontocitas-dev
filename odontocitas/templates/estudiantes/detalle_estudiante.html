@@ -88,7 +88,7 @@
                     </div>
                     {% if user.is_superuser %}
                         <div class="review-actions">
-                            <form action="{% url 'eliminar_resena' resena.id %}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta reseña? Esta acción no se puede deshacer.');">
+                            <form action="{% url 'accounts:eliminar_resena' resena.id %}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta reseña? Esta acción no se puede deshacer.');">
                                 {% csrf_token %}
                                 <button type="submit" class="btn-delete-review" title="Eliminar reseña">
                                     <i class="fas fa-trash-alt"></i>

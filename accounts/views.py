@@ -73,7 +73,7 @@ def edit_profile(request):
     return render(request, 'registration/edit_profile.html', {'form': form})
 
 def lista_estudiantes(request):
-    perfiles = Perfil.objects.filter(user__is_superuser=False)
+    perfiles = Perfil.objects.filter(user__is_superuser=False).order_by('-calificacion_promedio')
     return render(request, 'estudiantes/lista_estudiantes.html', {'perfiles': perfiles})
 
 def detalle_estudiante(request, user_id):
@@ -91,7 +91,6 @@ def detalle_estudiante(request, user_id):
             nueva_resena.estudiante = perfil
             nueva_resena.save()
             request.session['resena_enviada'] = True
-            # --- ¡CORRECCIÓN! El argumento correcto es user_id, no estudiante_id ---
             return redirect('detalle_estudiante', user_id=user_id)
     else:
         resena_form = ResenaForm()
@@ -107,21 +106,11 @@ def detalle_estudiante(request, user_id):
     
     return render(request, 'estudiantes/detalle_estudiante.html', contexto)
 
-# --- ¡NUEVA VISTA! ---
 @require_POST
 @user_passes_test(superuser_check)
 def eliminar_resena(request, resena_id):
-    # Busca la reseña, si no existe, devuelve un error 404
     resena = get_object_or_404(Resena, id=resena_id)
-    
-    # Guarda el ID del perfil de estudiante para la redirección
     user_id_redirect = resena.estudiante.user.id
-    
-    # Elimina la reseña
     resena.delete()
-    
-    # Envía un mensaje de éxito
     messages.success(request, "La reseña ha sido eliminada correctamente.")
-    
-    # Redirige de vuelta a la página del perfil del estudiante
     return redirect('detalle_estudiante', user_id=user_id_redirect)
