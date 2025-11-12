@@ -1,0 +1,174 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}OdontoCitas | Clínica Dental y Odontología en UNAN Managua{% endblock %}
+
+{% block head %}
+<meta name="description" content="Encuentra atención dental asequible y de calidad en OdontoCitas, la clínica odontológica de la UNAN Managua. Ofrecemos una amplia gama de servicios odontológicos supervisados por especialistas. ¡Agenda tu cita hoy y mejora tu salud bucal!">
+<meta name="keywords" content="odontología, clínica dental, UNAN Managua, cuidado dental, salud bucal, dentista, servicios odontológicos, atención dental asequible, Managua, Nicaragua">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="home-page-container">
+
+    <!-- Hero Section -->
+    <section class="hero-section-home">
+        <div class="hero-content">
+            <h1 class="hero-title-home">Clínica Dental OdontoCitas en UNAN Managua</h1>
+            <p class="hero-subtitle-home">Aprendemos sirviendo, servimos sonriendo: Conectamos pacientes con estudiantes talentosos de odontología para ofrecerte un cuidado dental accesible y de calidad.</p>
+            <div class="hero-buttons-home">
+                <a href="{% url 'lista_estudiantes' %}" class="btn-home">Ver Perfiles de Estudiantes</a>
+                <a href="{% url 'lista_ofertas' %}" class="btn-home btn-secondary-home">Explorar Tratamientos</a>
+            </div>
+
+            <!-- Hero Contact Info -->
+            <div class="hero-contact-info">
+                <a href="mailto:Odontocitas7@gmail.com" class="contact-info-item">
+                    <div class="icon"><i class="fas fa-envelope"></i></div>
+                    <div class="text-content">
+                        <span class="title">Correo</span>
+                        <span class="detail">Odontocitas7@gmail.com</span>
+                    </div>
+                </a>
+                <a href="tel:+50589838775" class="contact-info-item">
+                    <div class="icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="text-content">
+                        <span class="title">Teléfono</span>
+                        <span class="detail">(505) 8983-8775</span>
+                    </div>
+                </a>
+                <a href="https://maps.app.goo.gl/2u6bgjweFP8c3rz29" target="_blank" class="contact-info-item">
+                    <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="text-content">
+                        <span class="title">Ubicación</span>
+                        <span class="detail">UNAN Managua, Pabellón 68, Segundo Piso.</span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Clinic Info Section with Carousel -->
+    <section class="home-section clinic-info-section-home animate-on-scroll">
+        <div class="container">
+            <h2 class="section-title-home">Nuestra Clínica Odontológica</h2>
+            <p class="section-subtitle-home">
+                Un centro de excelencia en salud dental, combinando educación de primer nivel y atención comunitaria en Managua.
+            </p>
+            <div class="info-content-home">
+                <!-- Carousel on the left -->
+                <div class="info-image-home">
+                    <div class="carousel-container">
+                        <div class="carousel-slide active">
+                            <img src="{% static 'images/clinic_photo.jpg' %}" alt="Interior de la clínica dental OdontoCitas en la UNAN Managua">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="{% static 'images/clinic_photo2.jpg' %}" alt="Estudiante de odontología atendiendo a un paciente en la clínica">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="{% static 'images/clinic_photo3.jpg' %}" alt="Equipamiento moderno de la clínica odontológica">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text on the right -->
+                <div class="info-text-home">
+                    <h3>Cuidado dental de calidad supervisado por <strong>odontólogos especialistas de la UNAN</strong></h3>
+                    <p>
+                        Nos especializamos en una amplia gama de servicios odontológicos para cuidar de tu salud bucal, incluyendo: <strong>limpiezas profundas, gingivectomía, restauraciones (calzas)</strong>, y mucho más.
+                    </p>
+                    <p>
+                        Nuestro compromiso es doble: formar a la próxima generación de odontólogos de excelencia y brindar a la comunidad un acceso asequible a servicios de alta calidad. Cada procedimiento es cuidadosamente supervisado por profesionales experimentados, garantizando tu seguridad y satisfacción en cada tratamiento dental.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission, Vision & Values Section -->
+    <section class="home-section animate-on-scroll">
+        <div class="container">
+            <div class="feature-cards-container">
+                <div class="feature-card-home">
+                    <div class="card-icon-home">🦷</div>
+                    <h3 class="card-title-home">Nuestra Misión</h3>
+                    <p>
+                    Ser un componente vital en la formación integral de los futuros profesionales de odontología, brindándoles un espacio clínico real para el dominio de sus competencias, cientifico-técnicas y el fortalecimiento de sus valores éticos y compromiso social, mientras garantizamos el acceso a una atención bucal preventiva, digna y de bajo costo al pueblo nicaragüense.
+                    </p>
+                </div>
+                <div class="feature-card-home vision-card">
+                    <div class="card-icon-home">🌟</div>
+                    <h3 class="card-title-home">Nuestra Visión</h3>
+                    <p>Constituirnos en la unidad modelo, acreditada y de alto reconocimiento por su
+aporte a la docencia superior, la proyección social y la salud pública del país,
+siendo un referente de calidad en la atención odontológica accesible, que
+promueve la cultura de la prevención y contribuye al desarrollo humano
+sostenible de las comunidades menos favorecidas.</p>
+                </div>
+                <div class="feature-card-home" style="border-top-color: #ffc107;">
+                    <div class="card-icon-home">🤝</div>
+                    <h3 class="card-title-home">Nuestros Valores</h3>
+                    <p>Nuestra práctica se guía por el Compromiso Social, priorizando el servicio a la
+comunidad y la accesibilidad a la salud bucal; la Ética Profesional, que asegura el
+rigor científico y la transparencia en cada procedimiento clínico supervisado; el
+Humanismo y la Empatía, garantizando una atención digna y respetuosa al
+paciente; y la Excelencia, enfocada en el fortalecimiento de nuestras competencias
+preprofesionales bajo los más altos estándares de calidad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ofertas Recientes Section -->
+    <section class="home-section popular-services-section-home animate-on-scroll">
+        <div class="container">
+            <h2 class="section-title-home">Nuestros Servicios y Tratamientos Dentales</h2>
+            <p class="section-subtitle-home">Explora los últimos servicios publicados por nuestros estudiantes y encuentra el tratamiento perfecto para tu cuidado dental.</p>
+            
+            {% if ofertas_recientes %}
+                <div class="ofertas-grid mt-4">
+                    {% for oferta in ofertas_recientes %}
+                        {% include 'ofertas/partials/oferta_card.html' with oferta=oferta %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-secondary text-center mt-4">
+                    <p class="mb-0">Aún no hay tratamientos publicados. ¡Vuelve pronto!</p>
+                </div>
+            {% endif %}
+
+            <div class="text-center mt-4 pt-2">
+                <a href="{% url 'lista_ofertas' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-th-list me-2"></i>Ver Todos los Tratamientos
+                </a>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Optional: Unobserve the element after it has been animated
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1 // Trigger when 10% of the element is visible
+    });
+
+    animatedElements.forEach(element => {
+        observer.observe(element);
+    });
+});
+</script>
+
+{% endblock %}
