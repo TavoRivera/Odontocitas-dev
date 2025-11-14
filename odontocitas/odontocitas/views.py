@@ -10,3 +10,9 @@ def index(request):
     }
     
     return render(request, 'index.html', context)
+
+def handler404(request, exception):
+    """
+    Vista personalizada para manejar los errores 404 (Página no encontrada).
+    """
+    return render(request, '404.html', status=404)

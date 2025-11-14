@@ -9,7 +9,7 @@
 
     <div class="table-container">
         <div class="table-header">
-            <a href="{% url 'register' %}" class="btn btn-primary-table">
+            <a href="{% url 'accounts:register' %}" class="btn btn-primary-table">
                 <i class="fas fa-plus"></i> Agregar Nuevo Usuario
             </a>
         </div>
@@ -34,10 +34,10 @@
                             <td>{{ user.email }}</td>
                             <td>{{ user.first_name }} {{ user.last_name }}</td>
                             <td class="actions-cell">
-                                <a href="{% url 'editar_usuario' user.id %}" class="btn-action btn-edit">
+                                <a href="{% url 'accounts:editar_usuario' user.id %}" class="btn-action btn-edit">
                                     <i class="fas fa-pencil-alt"></i> Editar
                                 </a>
-                                <a href="{% url 'eliminar_usuario' user.id %}" class="btn-action btn-delete">
+                                <a href="{% url 'accounts:eliminar_usuario' user.id %}" class="btn-action btn-delete">
                                     <i class="fas fa-trash-alt"></i> Eliminar
                                 </a>
                             </td>

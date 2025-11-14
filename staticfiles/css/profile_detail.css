@@ -1,0 +1,6 @@
+
+.about-me-text {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px; /* Espacio para la barra de scroll */
+}

@@ -15,7 +15,7 @@
         <form method="post" style="text-align: center;">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Eliminar Usuario</button>
-            <a href="{% url 'lista_usuarios' %}" class="btn btn-neutral">Cancelar</a>
+            <a href="{% url 'accounts:lista_usuarios' %}" class="btn btn-neutral">Cancelar</a>
         </form>
     </div>
 </div>

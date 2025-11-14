@@ -31,7 +31,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             messages.success(request, f'El usuario "{user.username}" ha sido creado exitosamente.')
-            return redirect('lista_usuarios')
+            return redirect('accounts:lista_usuarios')
     else:
         form = RegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
@@ -44,7 +44,7 @@ def editar_usuario(request, user_id):
         if form.is_valid():
             form.save()
             messages.success(request, f'El usuario "{edited_user.username}" ha sido actualizado.')
-            return redirect('lista_usuarios')
+            return redirect('accounts:lista_usuarios')
     else:
         form = UserEditForm(instance=edited_user)
     return render(request, 'registration/editar_usuario.html', {'form': form, 'edited_user': edited_user})
@@ -56,18 +56,18 @@ def eliminar_usuario(request, user_id):
         username = user_to_delete.username
         user_to_delete.delete()
         messages.success(request, f'El usuario "{username}" ha sido eliminado.')
-        return redirect('lista_usuarios')
+        return redirect('accounts:lista_usuarios')
     return render(request, 'registration/eliminar_usuario.html', {'user_to_delete': user_to_delete})
 
 @login_required
 def edit_profile(request):
-    perfil = request.user.perfil
+    perfil, created = Perfil.objects.get_or_create(user=request.user)
     if request.method == 'POST':
         form = PerfilForm(request.POST, request.FILES, instance=perfil)
         if form.is_valid():
             form.save()
             messages.success(request, 'Tu perfil ha sido actualizado.')
-            return redirect('edit_profile')
+            return redirect('accounts:edit_profile')
     else:
         form = PerfilForm(instance=perfil)
     return render(request, 'registration/edit_profile.html', {'form': form})
