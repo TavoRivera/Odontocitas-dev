@@ -1,5 +1,10 @@
 User-agent: *
 Disallow: /admin/
 Disallow: /accounts/
+Disallow: /ofertas/crear/
+Disallow: /ofertas/editar/
+Disallow: /ofertas/eliminar/
+Disallow: /mis-ofertas/
+Disallow: /solicitudes/
 
 Sitemap: /sitemap.xml

@@ -1,9 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>OdontoCitas</title>
+    <meta charset="UTF-8">
+    <title>{% block title %}OdontoCitas - Conectando Pacientes con Estudiantes de Odontología{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %}Encuentra estudiantes de odontología talentosos y motivados para tratamientos dentales asequibles y de calidad. OdontoCitas es la plataforma líder que conecta pacientes con futuros profesionales de la salud bucal.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}estudiante de odontología, tratamientos dentales, odontología asequible, salud bucal, clínica dental universitaria, OdontoCitas, UNAN Managua{% endblock %}">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'styles.css' %}">

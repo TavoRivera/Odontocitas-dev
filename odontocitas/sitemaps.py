@@ -1,34 +1,42 @@
-from django.contrib import sitemaps
+from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from ofertas.models import Oferta
 from accounts.models import Perfil
+from ofertas.models import Oferta
 
-class StaticViewSitemap(sitemaps.Sitemap):
-    priority = 0.5
-    changefreq = 'daily'
-
-    def items(self):
-        return ['index', 'lista_ofertas', 'lista_estudiantes']
-
-    def location(self, item):
-        return reverse(item)
-
-class OfertaSitemap(sitemaps.Sitemap):
+class PerfilSitemap(Sitemap):
     changefreq = "weekly"
     priority = 0.9
 
     def items(self):
-        return Oferta.objects.filter(activa=True)
+        return Perfil.objects.filter(disponible_para_citas=True)
 
     def lastmod(self, obj):
-        return obj.fecha_creacion
+        # Asumiendo que el modelo User tiene un campo `date_joined` o similar
+        return obj.user.date_joined
 
-class EstudianteSitemap(sitemaps.Sitemap):
-    changefreq = "monthly"
+    def location(self, obj):
+        return reverse('detalle_estudiante', args=[obj.user.username])
+
+class OfertaSitemap(Sitemap):
+    changefreq = "daily"
     priority = 0.8
 
     def items(self):
-        return Perfil.objects.filter(rol='Estudiante', usuario__is_active=True)
+        return Oferta.objects.all()
+
+    def lastmod(self, obj):
+        # Asumiendo que Oferta tiene un campo de fecha de modificación/creación
+        return obj.fecha_creacion
 
     def location(self, obj):
-        return reverse('detalle_estudiante', args=[obj.usuario.username])
+        return reverse('detalle_oferta', args=[obj.id])
+
+class StaticViewSitemap(Sitemap):
+    priority = 0.5
+    changefreq = "monthly"
+
+    def items(self):
+        return ['index', 'lista_estudiantes', 'lista_ofertas']
+
+    def location(self, item):
+        return reverse(item)

@@ -1,7 +1,11 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block title %}{{ perfil.nombre_completo }} - OdontoLink{% endblock %}
+{% block title %}{{ perfil.nombre_completo }} - Estudiante de Odontología en OdontoCitas{% endblock %}
+
+{% block meta_description %}Conoce a {{ perfil.nombre_completo }}, un estudiante de {{ perfil.get_nivel_academico_display|default:'odontología' }} que ofrece una variedad de tratamientos dentales. Descubre sus servicios, lee reseñas de pacientes y agenda una cita en OdontoCitas.{% endblock %}
+
+{% block meta_keywords %}{{ perfil.nombre_completo }}, estudiante de odontología, {{ perfil.get_nivel_academico_display }}, tratamientos dentales, reseñas, agendar cita, OdontoCitas{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/profile_detail.css' %}">
@@ -108,7 +112,7 @@
 <!-- MODAL PARA ESCRIBIR RESEÑA (DISEÑO FINAL) -->
 <div id="review-modal" class="modal-overlay" style="display: none;">
     <div class="modal-content review-modal-content">
-        <h3 class="modal-title">Escribe tu reseña</h3>
+        <h3 class="modal-title">ESCRIBA SU RESEÑA</h3>
         <p>Por favor escribe tu nombre real y sé respetuoso(a) con tu comentario. Tus opiniones nos sirven para mejorar</p>
         <span class="modal-close" id="review-modal-close">&times;</span>
         <form method="post" class="review-form" id="main-review-form">
